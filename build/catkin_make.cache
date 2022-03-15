@@ -1,2 +1,0 @@
-
--DCATKIN_DEVEL_PREFIX=/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/devel -DCMAKE_INSTALL_PREFIX=/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/install -G Unix Makefiles

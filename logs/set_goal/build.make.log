@@ -1,0 +1,12 @@
+[35m[1mScanning dependencies of target set_goal[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/set_goal.dir/set_goal.cpp.o[0m
+[01m[K/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/src/set_goal/set_goal.cpp:2:10:[m[K [01;31m[Kfatal error: [m[Kgeometry_msgs/PoseStamped.h: No such file or directory
+ #include [01;31m[K"geometry_msgs/PoseStamped.h"[m[K
+          [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+compilation terminated.
+CMakeFiles/set_goal.dir/build.make:62: recipe for target 'CMakeFiles/set_goal.dir/set_goal.cpp.o' failed
+make[2]: *** [CMakeFiles/set_goal.dir/set_goal.cpp.o] Error 1
+CMakeFiles/Makefile2:67: recipe for target 'CMakeFiles/set_goal.dir/all' failed
+make[1]: *** [CMakeFiles/set_goal.dir/all] Error 2
+Makefile:140: recipe for target 'all' failed
+make: *** [all] Error 2
