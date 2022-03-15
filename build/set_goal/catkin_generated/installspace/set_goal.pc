@@ -3,6 +3,6 @@ prefix=/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/install
 Name: set_goal
 Description: Description of set_goal
 Version: 0.0.0
-Cflags: 
+Cflags: -I${prefix}/include
 Libs: -L${prefix}/lib 
 Requires: 

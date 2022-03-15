@@ -1,6 +1,7 @@
+#include "ros/ros.h"
 #include <vector>
 #include "geometry_msgs/PoseStamped.h"
-#include "include/NewGoal.h"
+#include "new_goal/NewGoal.h"
 #include "tf/tf.h"
 #include "tf2_msgs/TFMessage.h"
 #include <sstream>
