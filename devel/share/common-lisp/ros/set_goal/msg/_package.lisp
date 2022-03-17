@@ -1,0 +1,1 @@
+/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/devel/.private/set_goal/share/common-lisp/ros/set_goal/msg/_package.lisp

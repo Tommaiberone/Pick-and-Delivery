@@ -1,7 +1,6 @@
 #include "ros/ros.h"
 #include <vector>
 #include "geometry_msgs/PoseStamped.h"
-#include "new_goal/NewGoal.h"
 #include "tf/tf.h"
 #include "tf2_msgs/TFMessage.h"
 #include <sstream>
@@ -22,22 +21,21 @@ int message_published = 0;
 int cruising = 0;
 int debug = 0;
 
-
-void SetGoal_callback(const set_goal::NewGoal& new_goal)
+void SetGoal_callback(const geometry_msgs::PoseStamped& new_goal)
 {
     new_goal_msg.header.seq = n;
     n++;
     new_goal_msg.header.stamp = ros::Time::now();
     new_goal_msg.header.frame_id = "map";
     
-    new_goal_msg.pose.position.x = new_goal.x;
-    new_goal_msg.pose.position.y = new_goal.y;
+    new_goal_msg.pose.position.x = new_goal.pose.position.x;
+    new_goal_msg.pose.position.y = new_goal.pose.position.y;
     new_goal_msg.pose.position.z = 0;
     
     new_goal_msg.pose.orientation.x = 0;
     new_goal_msg.pose.orientation.y = 0;
     new_goal_msg.pose.orientation.z = 0;
-    new_goal_msg.pose.orientation.w = new_goal.theta;
+    new_goal_msg.pose.orientation.w = new_goal.pose.orientation.w;
 
     message_published = 1;      //Fa sì che la callback viene chiamata solo una volta
     cruising = 1;               //Setta il robot come occupato
@@ -161,7 +159,7 @@ int main(int argc, char **argv)
 
   
     //Initialize the subscribers and set the callback functions
-    ros::Subscriber sub = n.subscribe("New_Goal", 1000, SetGoal_callback);
+    ros::Subscriber sub = n.subscribe("/move_base_simple/goal", 1000, SetGoal_callback);
     ros::Subscriber sub_tf = n.subscribe("tf", 1000, position_callback);
 
     //Initialize two timers and set the check callback functions

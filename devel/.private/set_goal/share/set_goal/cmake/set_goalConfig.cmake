@@ -91,15 +91,15 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(set_goal_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/devel/.private/set_goal/include " STREQUAL " ")
+if(NOT "/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/devel/.private/set_goal/include;/opt/ros/melodic/include " STREQUAL " ")
   set(set_goal_INCLUDE_DIRS "")
-  set(_include_dirs "/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/devel/.private/set_goal/include")
+  set(_include_dirs "/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/devel/.private/set_goal/include;/opt/ros/melodic/include")
   if(NOT " " STREQUAL " ")
     set(_report "Check the issue tracker '' and consider creating a ticket if the problem has not been reported yet.")
   elseif(NOT " " STREQUAL " ")
     set(_report "Check the website '' for information and consider reporting the problem.")
   else()
-    set(_report "Report the problem to the maintainer 'me <me@todo.todo>' and request to fix the problem.")
+    set(_report "Report the problem to the maintainer 'Tommyber <bersani.1840825@studenti.uniroma1.it>' and request to fix the problem.")
   endif()
   foreach(idir ${_include_dirs})
     if(IS_ABSOLUTE ${idir} AND IS_DIRECTORY ${idir})
@@ -116,7 +116,7 @@ if(NOT "/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/devel/.pri
   endforeach()
 endif()
 
-set(libraries "")
+set(libraries "set_goal")
 foreach(library ${libraries})
   # keep build configuration keywords, target names and absolute libraries as-is
   if("${library}" MATCHES "^(debug|optimized|general)$")
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/devel/.private/set_goal/lib;/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/devel/lib;/opt/ros/melodic/lib)
+    foreach(path /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/devel/.private/set_goal/lib;/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/devel/lib;/home/me/Desktop/labiagi_2020_21/workspaces/srrg2_labiagi/devel/lib;/opt/ros/melodic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
@@ -185,7 +185,7 @@ foreach(t ${set_goal_EXPORTED_TARGETS})
   endif()
 endforeach()
 
-set(depends "")
+set(depends "geometry_msgs;roscpp;rospy;std_msgs;tf2;tf2_msgs;message_runtime")
 foreach(depend ${depends})
   string(REPLACE " " ";" depend_list ${depend})
   # the package name of the dependency must be kept in a unique variable so that it is not overwritten in recursive calls
