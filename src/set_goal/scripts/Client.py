@@ -1,23 +1,75 @@
+import errno
 import socket
 
+Database =  {   "Tommaso"   :   "Password_Tommaso",
+                "Filippo"   :   "Password_Filippo",
+                "Federico"  :   "Password_Federico",
+                "Luigi"     :   "Password_Luigi",
+                "Andrea"    :   "Password_Andrea"
+                }
+
 def client_program():
-    host = socket.gethostname()  # as both code is running on same pc
-    port = 5000  # socket server port number
+    host = "localhost"  # as both code is running on same pc
+    port = 12345  # socket server port number
 
     client_socket = socket.socket()  # instantiate
     client_socket.connect((host, port))  # connect to the server
 
-    message = input(" -> ")  # take input
+    message = raw_input(" -> ")  # take input
+    if message.lower().strip() == 'bye':
+        print("Ricevuto il comando di arresto, chiudo la connessione...")
+
+        try: client_socket.close()  # close the connection
+        except socket.error as e:
+            print ("Caught exception socket.error :", e)
+        exit
+
+    print("Mando il messaggio...")
+    client_socket.send(message)  # send message
+    print("Mandato")
+    print("Aspetto una risposta...")
 
     while message.lower().strip() != 'bye':
-        client_socket.send(message.encode())  # send message
-        data = client_socket.recv(1024).decode()  # receive response
+        
+        data = client_socket.recv(1024)  # receive response
 
-        print('Received from server: ' + data)  # show in terminal
+        print('>>' + data)  # show in terminal
 
-        message = input(" -> ")  # again take input
+        if data == " -> ":
+            message = raw_input("")  # again take input
+            print("Mando il messaggio...")
+            client_socket.send(message)  # send message
+            print("Mandato")
+            print("Aspetto una risposta...")
 
-    client_socket.close()  # close the connection
+
+
+    print("Ricevuto il comando di arresto, chiudo la connessione...")
+
+    try: client_socket.close()  # close the connection
+    except socket.error as e:
+        print ("Caught exception socket.error :", e)
+
 
 if __name__ == '__main__':
+
+    while True :
+
+        username = raw_input("Inserisci il tuo nome utente: ")
+
+        if username not in Database.keys():
+            print("Errore! Utente non registrato")
+            continue
+        
+        password = raw_input("Inserisci la password: ")
+        
+        if (Database[username] != password):
+            print("Errore! La password non combacia")
+            continue
+            
+        print("Utente loggato correttamente")
+        break
+
+    
+
     client_program()
