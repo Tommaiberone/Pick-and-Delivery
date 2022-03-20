@@ -78,10 +78,6 @@ def client_handle_thread(client, address):
 					richiesta_sconosciuta(client)
 
 				else:
-					if DEBUG: print("Nome utente riconosciuto, invio una risposta")
-					client.send("Ciao", nome_richiedente, "! Vengo subito a prendere il pacco:\n")
-					time.sleep(.5)
-					client.send(" -> ")
 					posizione_richiedente = Utenti[posizione_richiedente].posizione
 
 					while BUSY == True:
@@ -91,6 +87,7 @@ def client_handle_thread(client, address):
 
 					BUSY = True 
 
+					client.send("Ciao", nome_richiedente, "! Vengo subito a prendere il pacco:\n")
 					elabora(client, address, nome_richiedente, posizione_richiedente)						
 
 		except:

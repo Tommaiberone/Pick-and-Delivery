@@ -63,62 +63,63 @@ def client_handle_thread(client, address):
 	benvenuto(client)
 
 	while True:
+
 		try:
 			richiesta_ricevuta = client.recv(SIZE)
-
-			if not richiesta_ricevuta:
-				raise error('Client disconnected')
-
-			else:
-				messaggio_ricevuto = richiesta_ricevuta.strip().split(",")
-
-				nome_richiedente = messaggio_ricevuto[0]
-
-				if nome_richiedente not in Utenti.keys():
-					richiesta_sconosciuta(client)
-
-				else:
-					posizione_richiedente = Utenti[posizione_richiedente].posizione
-
-					while BUSY == True:
-						client.send("Robot temporaneamente occupato, " +
-									"riprovo in qualche istante...\n")
-						time.sleep(5)
-
-					BUSY = True 
-
-					client.send("Ciao", nome_richiedente, "! Vengo subito a prendere il pacco:\n")
-					elabora(client, address, nome_richiedente, posizione_richiedente)						
-
 		except:
-			if DEBUG: print ("Il client con indirizzo", address, "si e' disconnesso "+
-							  "correttamente")
+			if DEBUG: print ("Il client con indirizzo", address, "si e' disconnesso correttamente")
 			client.close()
 			return False
 
-def elabora(client, address, nome_client, posizione_client):
+		else:
+			messaggio_ricevuto = richiesta_ricevuta.strip().split(",")
 
-	if DEBUG: print("Ricevuta richiesta di elaborazione pacchetto da parte di " + 
-				nome_client +"\n")
+			nome_richiedente = messaggio_ricevuto[0]
+
+			if DEBUG: print("Ho ricevuto il messaggio {}, \n".format(messaggio_ricevuto))
+			if DEBUG: print("Il nome richiedente e': {}".format(nome_richiedente))
+
+			if nome_richiedente not in Utenti.keys():
+				richiesta_sconosciuta(client)
+
+			else:
+				if DEBUG: print("Nome utente riconosciuto, invio una risposta")
+
+				client.send("Ciao {}! Vengo subito a prendere il pacco:\n".format(nome_richiedente))
+				posizione_richiedente = Utenti[nome_richiedente].posizione
+
+				if DEBUG: print("La posizione del richiedente e': x={}, y={}, theta={}\n".
+							format(posizione_richiedente.x, posizione_richiedente.y, posizione_richiedente.theta))
+
+				#while BUSY == True:
+				#	client.send("Robot temporaneamente occupato, riprovo in qualche istante...\n")
+				#	time.sleep(5)
+
+				BUSY = True 
+
+				elabora_richiesta(client, address, nome_richiedente, posizione_richiedente)						
+
+def elabora_richiesta(client, address, nome_client, posizione_client):
+
+	if DEBUG: print("Ricevuta richiesta di elaborazione pacchetto da parte di {}\n".format(nome_client))
 	time.sleep(.5)
 
-	msg = NewGoal	(	posizione_client.posizione.x,
-						posizione_client.posizione.y,
-						posizione_client.posizione.theta
+	msg = NewGoal	(	posizione_client.x,
+						posizione_client.y,
+						posizione_client.theta
 					)
 					
 	NewGoal_Publisher.publish(msg)
 
 	client.send("Ho impostato correttamente la posizione\n")
-	time.sleep(5)
+	time.sleep(.5)
 	client.send("Eccomi! Dove devo portarlo?\n")
 	time.sleep(.5)
 	client.send(" -> ")
 	try:
 		data = client.recv(SIZE)
 	except:
-		if DEBUG: print ("Il client con indirizzo", address, "si e' disconnesso "+
-							"correttamente")
+		if DEBUG: print ("Il client con indirizzo {} si e' disconnesso correttamente".format(address))
 		client.close()
 		return False
 
@@ -132,7 +133,7 @@ def elabora(client, address, nome_client, posizione_client):
 		
 			posizione_destinatario = Utenti[nome_destinatario].posizione
 
-			client.send("Ok! porto il pacchetto a "+ nome_destinatario)
+			client.send("Ok! porto il pacchetto a {}".format(nome_destinatario))
 
 			nuova_destinazione = NewGoal	(	posizione_destinatario.x,
 												posizione_destinatario.y,
@@ -151,8 +152,7 @@ def elabora(client, address, nome_client, posizione_client):
 				data = client.recv(SIZE)
 			except:
 				if DEBUG: 
-					print ("Il client con indirizzo " + address + 
-						   " si e' disconnesso correttamente")
+					print ("Il client con indirizzo", address, "si e' disconnesso correttamente")
 				client.close()
 				return False
 

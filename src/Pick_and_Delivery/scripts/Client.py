@@ -1,9 +1,12 @@
 import errno
 import socket
+import time
 
-DEBUG = False
+DEBUG = True
+SIZE = 1024
 
 Database =  {   "Tommaso"   :   "Password_Tommaso",
+                "T"         :   "T",
                 "Filippo"   :   "Password_Filippo",
                 "Federico"  :   "Password_Federico",
                 "Luigi"     :   "Password_Luigi",
@@ -18,19 +21,20 @@ def client_program():
     client_socket.connect((host, port))  # connect to the server
 
 
-    message = ""
-    while message.lower().strip() != 'bye':
+    messaggio_da_inviare = ""
+    while messaggio_da_inviare.lower().strip() != 'bye':
         
-        data = client_socket.recv(1024)  # receive response
+        messaggio_ricevuto = client_socket.recv(SIZE)  # receive response
 
-        print('>>' + data)  # show in terminal
+        print('>>' + messaggio_ricevuto)  # show in terminal
 
-        if data == " -> ":
-            message = raw_input("")  # again take input
-            print("Mando il messaggio...")
-            client_socket.send(message)  # send message
-            print("Mandato")
-            print("Aspetto una risposta...")
+        if messaggio_ricevuto == " -> ":
+            messaggio_da_inviare = raw_input("")  # again take input
+            if DEBUG: print("Mando il messaggio...")
+            client_socket.send(messaggio_da_inviare)  # send message
+            if DEBUG: print("Mandato, aspetto una risposta...")
+
+        time.sleep(.4)
 
 
 

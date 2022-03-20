@@ -1,0 +1,8 @@
+prefix=/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/src/build/devel
+
+Name: Pick_and_Delivery
+Description: Description of Pick_and_Delivery
+Version: 0.0.0
+Cflags: -I/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/src/build/devel/include
+Libs: -L${prefix}/lib -lPick_and_Delivery
+Requires: geometry_msgs roscpp rospy std_msgs tf2 tf2_msgs message_runtime

@@ -7,11 +7,11 @@ import rospy
 from std_msgs.msg import String, Float32
 from Pick_and_Delivery.msg import NewGoal
 
-host = "localhost"
-port = 12345
-debug = True
-busy = False
-size = 1024
+HOST = "localhost"
+PORT = 12345
+DEBUG = True
+BUSY = False
+SIZE = 1024
 
 class Utente:   
 	Username		=	""
@@ -36,13 +36,18 @@ Utenti =  { 	"Tommaso" 	: 	Utente("Tommaso",0,0,0),
 
 
 def listen(sock):
-	if debug : print("Mi metto in ascolto sulla porta...")
+	if DEBUG : print("Mi metto in ascolto sulla porta...")
 	sock.listen(5)
 	while True:
 		client, address = sock.accept()
-		if debug : print("Connesso al client con indirizzo", address)
+		if DEBUG : print("Connesso al client con indirizzo", address)
 		threading.Thread(target = client_handle_thread,args = (client,address)).start()
 
+
+def benvenuto(client):
+	client.send("Ciao! Dimmi come ti chiami, cosi' vengo a prendere il pacco:\n")
+	time.sleep(.5)
+	client.send(" -> ")
 
 
 def arrivato_callback(client):
@@ -55,41 +60,48 @@ def client_handle_thread(client, address):
 	Arrivato_checker = 	rospy.Subscriber("/Arrived", String,
 			 	  		arrivato_callback,callback_args= client)
 
+	benvenuto(client)
 
 	while True:
 		try:
-			richiesta_ricevuta = client.recv(size)
+			richiesta_ricevuta = client.recv(SIZE)
 
-			if richiesta_ricevuta:
+			if not richiesta_ricevuta:
+				raise error('Client disconnected')
 
+			else:
 				messaggio_ricevuto = richiesta_ricevuta.strip().split(",")
 
 				nome_richiedente = messaggio_ricevuto[0]
 
-				if nome_richiedente in Utenti.keys():
+				if nome_richiedente not in Utenti.keys():
+					richiesta_sconosciuta(client)
 
+				else:
+					if DEBUG: print("Nome utente riconosciuto, invio una risposta")
+					client.send("Ciao", nome_richiedente, "! Vengo subito a prendere il pacco:\n")
+					time.sleep(.5)
+					client.send(" -> ")
 					posizione_richiedente = Utenti[posizione_richiedente].posizione
 
-					while busy == True:
+					while BUSY == True:
 						client.send("Robot temporaneamente occupato, " +
 									"riprovo in qualche istante...\n")
 						time.sleep(5)
 
-					busy = True 
+					BUSY = True 
+
 					elabora(client, address, nome_richiedente, posizione_richiedente)						
-								
-				else:
-					richiesta_sconosciuta(client)
-			else:
-				raise error('Client disconnected')
+
 		except:
-			if debug: print ("Il client con indirizzo", address, "si e' disconnesso "+
+			if DEBUG: print ("Il client con indirizzo", address, "si e' disconnesso "+
 							  "correttamente")
 			client.close()
 			return False
 
 def elabora(client, address, nome_client, posizione_client):
-	client.send("Ricevuta richiesta di elaborazione pacchetto da parte di " + 
+
+	if DEBUG: print("Ricevuta richiesta di elaborazione pacchetto da parte di " + 
 				nome_client +"\n")
 	time.sleep(.5)
 
@@ -106,9 +118,9 @@ def elabora(client, address, nome_client, posizione_client):
 	time.sleep(.5)
 	client.send(" -> ")
 	try:
-		data = client.recv(size)
+		data = client.recv(SIZE)
 	except:
-		if debug: print ("Il client con indirizzo", address, "si e' disconnesso "+
+		if DEBUG: print ("Il client con indirizzo", address, "si e' disconnesso "+
 							"correttamente")
 		client.close()
 		return False
@@ -134,14 +146,14 @@ def elabora(client, address, nome_client, posizione_client):
 
 
 			time.sleep(5)
-			busy = False
+			BUSY = False
 			break
 		else:
 			richiesta_sconosciuta(client)
 			try:
-				data = client.recv(size)
+				data = client.recv(SIZE)
 			except:
-				if debug: 
+				if DEBUG: 
 					print ("Il client con indirizzo " + address + 
 						   " si e' disconnesso correttamente")
 				client.close()
@@ -164,9 +176,9 @@ if __name__ == "__main__":
 	NewGoal_Publisher = rospy.Publisher('New_Goal', NewGoal, queue_size=10)
 	rate = rospy.Rate(10)
     
-	if (debug): print("Creo la socket del server...")
+	if (DEBUG): print("Creo la socket del server...")
 	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-	if (debug): print("Faccio il bind della socket alla porta 12345")
-	sock.bind((host, port))
+	if (DEBUG): print("Faccio il bind della socket alla porta 12345")
+	sock.bind((HOST, PORT))
 	listen(sock)
