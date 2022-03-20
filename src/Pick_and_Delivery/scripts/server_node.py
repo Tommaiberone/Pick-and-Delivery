@@ -37,7 +37,7 @@ Utenti =  { 	"Tommaso" 	: 	Utente("Tommaso",0,0,0),
 
 def listen(sock):
 	if DEBUG : print("Mi metto in ascolto sulla porta...")
-	sock.listen(5)
+	sock.listen()
 	while True:
 		client, address = sock.accept()
 		if DEBUG : print("Connesso al client con indirizzo", address)
@@ -104,12 +104,12 @@ def elabora_richiesta(client, address, nome_client, posizione_client):
 	if DEBUG: print("Ricevuta richiesta di elaborazione pacchetto da parte di {}\n".format(nome_client))
 	time.sleep(.5)
 
-	msg = NewGoal	(	posizione_client.x,
+	Nuova_destinazione = NewGoal	(	posizione_client.x,
 						posizione_client.y,
 						posizione_client.theta
 					)
 					
-	NewGoal_Publisher.publish(msg)
+	NewGoal_Publisher.publish(Nuova_destinazione)
 
 	client.send("Ho impostato correttamente la posizione\n")
 	time.sleep(.5)
@@ -117,7 +117,7 @@ def elabora_richiesta(client, address, nome_client, posizione_client):
 	time.sleep(.5)
 	client.send(" -> ")
 	try:
-		data = client.recv(SIZE)
+		messaggio_ricevuto = client.recv(SIZE)
 	except:
 		if DEBUG: print ("Il client con indirizzo {} si e' disconnesso correttamente".format(address))
 		client.close()
@@ -125,9 +125,9 @@ def elabora_richiesta(client, address, nome_client, posizione_client):
 
 	while True:
 
-		messaggio_ricevuto = data.strip().split(",")
+		contenuto_messaggio_ricevuto = messaggio_ricevuto.strip().split(",")
 
-		nome_destinatario = messaggio_ricevuto[0]
+		nome_destinatario = contenuto_messaggio_ricevuto[0]
 
 		if nome_destinatario in Utenti.keys():
 		
@@ -149,7 +149,7 @@ def elabora_richiesta(client, address, nome_client, posizione_client):
 		else:
 			richiesta_sconosciuta(client)
 			try:
-				data = client.recv(SIZE)
+				messaggio_ricevuto = client.recv(SIZE)
 			except:
 				if DEBUG: 
 					print ("Il client con indirizzo", address, "si e' disconnesso correttamente")
