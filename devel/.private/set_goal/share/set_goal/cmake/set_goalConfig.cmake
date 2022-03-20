@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(set_goal_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/devel/.private/set_goal/include;/opt/ros/melodic/include " STREQUAL " ")
+if(NOT "/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/devel/.private/set_goal/include " STREQUAL " ")
   set(set_goal_INCLUDE_DIRS "")
-  set(_include_dirs "/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/devel/.private/set_goal/include;/opt/ros/melodic/include")
+  set(_include_dirs "/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/devel/.private/set_goal/include")
   if(NOT " " STREQUAL " ")
     set(_report "Check the issue tracker '' and consider creating a ticket if the problem has not been reported yet.")
   elseif(NOT " " STREQUAL " ")
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/devel/.private/set_goal/lib;/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/devel/lib;/home/me/Desktop/labiagi_2020_21/workspaces/srrg2_labiagi/devel/lib;/opt/ros/melodic/lib)
+    foreach(path /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/devel/.private/set_goal/lib;/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/devel/lib;/opt/ros/melodic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

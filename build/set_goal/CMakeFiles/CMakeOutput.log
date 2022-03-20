@@ -1,4 +1,4 @@
-The system is: Linux - 5.4.0-65-generic - x86_64
+The system is: Linux - 5.4.0-104-generic - x86_64
 Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
 Compiler: /usr/bin/cc 
 Build flags: 
@@ -28,28 +28,28 @@ The CXX compiler identification is GNU, found in "/home/me/Desktop/labiagi_2020_
 Determining if the C compiler works passed with the following output:
 Change Dir: /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_26d34/fast"
-/usr/bin/make -f CMakeFiles/cmTC_26d34.dir/build.make CMakeFiles/cmTC_26d34.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_f2198/fast"
+/usr/bin/make -f CMakeFiles/cmTC_f2198.dir/build.make CMakeFiles/cmTC_f2198.dir/build
 make[1]: Entering directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_26d34.dir/testCCompiler.c.o
-/usr/bin/cc    -o CMakeFiles/cmTC_26d34.dir/testCCompiler.c.o   -c /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp/testCCompiler.c
-Linking C executable cmTC_26d34
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_26d34.dir/link.txt --verbose=1
-/usr/bin/cc      -rdynamic CMakeFiles/cmTC_26d34.dir/testCCompiler.c.o  -o cmTC_26d34 
+Building C object CMakeFiles/cmTC_f2198.dir/testCCompiler.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_f2198.dir/testCCompiler.c.o   -c /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTC_f2198
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f2198.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_f2198.dir/testCCompiler.c.o  -o cmTC_f2198 
 make[1]: Leaving directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp'
 
 
 Detecting C compiler ABI info compiled with the following output:
 Change Dir: /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_9aaef/fast"
-/usr/bin/make -f CMakeFiles/cmTC_9aaef.dir/build.make CMakeFiles/cmTC_9aaef.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_fa4a0/fast"
+/usr/bin/make -f CMakeFiles/cmTC_fa4a0.dir/build.make CMakeFiles/cmTC_fa4a0.dir/build
 make[1]: Entering directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_9aaef.dir/CMakeCCompilerABI.c.o
-/usr/bin/cc    -o CMakeFiles/cmTC_9aaef.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.10/Modules/CMakeCCompilerABI.c
-Linking C executable cmTC_9aaef
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9aaef.dir/link.txt --verbose=1
-/usr/bin/cc     -v -rdynamic CMakeFiles/cmTC_9aaef.dir/CMakeCCompilerABI.c.o  -o cmTC_9aaef 
+Building C object CMakeFiles/cmTC_fa4a0.dir/CMakeCCompilerABI.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_fa4a0.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.10/Modules/CMakeCCompilerABI.c
+Linking C executable cmTC_fa4a0
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fa4a0.dir/link.txt --verbose=1
+/usr/bin/cc     -v -rdynamic CMakeFiles/cmTC_fa4a0.dir/CMakeCCompilerABI.c.o  -o cmTC_fa4a0 
 Using built-in specs.
 COLLECT_GCC=/usr/bin/cc
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper
@@ -61,9 +61,9 @@ Thread model: posix
 gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04) 
 COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_9aaef' '-mtune=generic' '-march=x86-64'
- /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/cc8tjGXF.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_9aaef /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_9aaef.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o
-COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_9aaef' '-mtune=generic' '-march=x86-64'
+COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_fa4a0' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/cc3YN5Rk.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_fa4a0 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_fa4a0.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_fa4a0' '-mtune=generic' '-march=x86-64'
 make[1]: Leaving directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp'
 
 
@@ -71,14 +71,14 @@ Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_9aaef/fast"]
-  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_9aaef.dir/build.make CMakeFiles/cmTC_9aaef.dir/build]
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_fa4a0/fast"]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_fa4a0.dir/build.make CMakeFiles/cmTC_fa4a0.dir/build]
   ignore line: [make[1]: Entering directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp']
-  ignore line: [Building C object CMakeFiles/cmTC_9aaef.dir/CMakeCCompilerABI.c.o]
-  ignore line: [/usr/bin/cc    -o CMakeFiles/cmTC_9aaef.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.10/Modules/CMakeCCompilerABI.c]
-  ignore line: [Linking C executable cmTC_9aaef]
-  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9aaef.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/cc     -v -rdynamic CMakeFiles/cmTC_9aaef.dir/CMakeCCompilerABI.c.o  -o cmTC_9aaef ]
+  ignore line: [Building C object CMakeFiles/cmTC_fa4a0.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/bin/cc    -o CMakeFiles/cmTC_fa4a0.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.10/Modules/CMakeCCompilerABI.c]
+  ignore line: [Linking C executable cmTC_fa4a0]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fa4a0.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/cc     -v -rdynamic CMakeFiles/cmTC_fa4a0.dir/CMakeCCompilerABI.c.o  -o cmTC_fa4a0 ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/cc]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper]
@@ -90,13 +90,13 @@ Parsed C implicit link information from above output:
   ignore line: [gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04) ]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_9aaef' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/cc8tjGXF.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_9aaef /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_9aaef.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_fa4a0' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/cc3YN5Rk.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_fa4a0 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_fa4a0.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o]
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/collect2] ==> ignore
     arg [-plugin] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so] ==> ignore
     arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/cc8tjGXF.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/cc3YN5Rk.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -115,7 +115,7 @@ Parsed C implicit link information from above output:
     arg [-znow] ==> ignore
     arg [-zrelro] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_9aaef] ==> ignore
+    arg [cmTC_fa4a0] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o] ==> ignore
@@ -127,7 +127,7 @@ Parsed C implicit link information from above output:
     arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
     arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
     arg [-L/usr/lib/gcc/x86_64-linux-gnu/7/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/7/../../..]
-    arg [CMakeFiles/cmTC_9aaef.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [CMakeFiles/cmTC_fa4a0.dir/CMakeCCompilerABI.c.o] ==> ignore
     arg [-lgcc] ==> lib [gcc]
     arg [--push-state] ==> ignore
     arg [--as-needed] ==> ignore
@@ -159,14 +159,14 @@ Parsed C implicit link information from above output:
 Detecting C [-std=c11] compiler features compiled with the following output:
 Change Dir: /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_404fd/fast"
-/usr/bin/make -f CMakeFiles/cmTC_404fd.dir/build.make CMakeFiles/cmTC_404fd.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_a509c/fast"
+/usr/bin/make -f CMakeFiles/cmTC_a509c.dir/build.make CMakeFiles/cmTC_a509c.dir/build
 make[1]: Entering directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_404fd.dir/feature_tests.c.o
-/usr/bin/cc   -std=c11 -o CMakeFiles/cmTC_404fd.dir/feature_tests.c.o   -c /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/feature_tests.c
-Linking C executable cmTC_404fd
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_404fd.dir/link.txt --verbose=1
-/usr/bin/cc      -rdynamic CMakeFiles/cmTC_404fd.dir/feature_tests.c.o  -o cmTC_404fd 
+Building C object CMakeFiles/cmTC_a509c.dir/feature_tests.c.o
+/usr/bin/cc   -std=c11 -o CMakeFiles/cmTC_a509c.dir/feature_tests.c.o   -c /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/feature_tests.c
+Linking C executable cmTC_a509c
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a509c.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_a509c.dir/feature_tests.c.o  -o cmTC_a509c 
 make[1]: Leaving directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp'
 
 
@@ -179,14 +179,14 @@ make[1]: Leaving directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and
 Detecting C [-std=c99] compiler features compiled with the following output:
 Change Dir: /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_86fd3/fast"
-/usr/bin/make -f CMakeFiles/cmTC_86fd3.dir/build.make CMakeFiles/cmTC_86fd3.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_e1712/fast"
+/usr/bin/make -f CMakeFiles/cmTC_e1712.dir/build.make CMakeFiles/cmTC_e1712.dir/build
 make[1]: Entering directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_86fd3.dir/feature_tests.c.o
-/usr/bin/cc   -std=c99 -o CMakeFiles/cmTC_86fd3.dir/feature_tests.c.o   -c /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/feature_tests.c
-Linking C executable cmTC_86fd3
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_86fd3.dir/link.txt --verbose=1
-/usr/bin/cc      -rdynamic CMakeFiles/cmTC_86fd3.dir/feature_tests.c.o  -o cmTC_86fd3 
+Building C object CMakeFiles/cmTC_e1712.dir/feature_tests.c.o
+/usr/bin/cc   -std=c99 -o CMakeFiles/cmTC_e1712.dir/feature_tests.c.o   -c /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/feature_tests.c
+Linking C executable cmTC_e1712
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e1712.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_e1712.dir/feature_tests.c.o  -o cmTC_e1712 
 make[1]: Leaving directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp'
 
 
@@ -199,14 +199,14 @@ make[1]: Leaving directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and
 Detecting C [-std=c90] compiler features compiled with the following output:
 Change Dir: /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_25fbb/fast"
-/usr/bin/make -f CMakeFiles/cmTC_25fbb.dir/build.make CMakeFiles/cmTC_25fbb.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_37142/fast"
+/usr/bin/make -f CMakeFiles/cmTC_37142.dir/build.make CMakeFiles/cmTC_37142.dir/build
 make[1]: Entering directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_25fbb.dir/feature_tests.c.o
-/usr/bin/cc   -std=c90 -o CMakeFiles/cmTC_25fbb.dir/feature_tests.c.o   -c /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/feature_tests.c
-Linking C executable cmTC_25fbb
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_25fbb.dir/link.txt --verbose=1
-/usr/bin/cc      -rdynamic CMakeFiles/cmTC_25fbb.dir/feature_tests.c.o  -o cmTC_25fbb 
+Building C object CMakeFiles/cmTC_37142.dir/feature_tests.c.o
+/usr/bin/cc   -std=c90 -o CMakeFiles/cmTC_37142.dir/feature_tests.c.o   -c /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/feature_tests.c
+Linking C executable cmTC_37142
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_37142.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_37142.dir/feature_tests.c.o  -o cmTC_37142 
 make[1]: Leaving directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp'
 
 
@@ -217,28 +217,28 @@ make[1]: Leaving directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and
 Determining if the CXX compiler works passed with the following output:
 Change Dir: /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_597d5/fast"
-/usr/bin/make -f CMakeFiles/cmTC_597d5.dir/build.make CMakeFiles/cmTC_597d5.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_1c976/fast"
+/usr/bin/make -f CMakeFiles/cmTC_1c976.dir/build.make CMakeFiles/cmTC_1c976.dir/build
 make[1]: Entering directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_597d5.dir/testCXXCompiler.cxx.o
-/usr/bin/c++     -o CMakeFiles/cmTC_597d5.dir/testCXXCompiler.cxx.o -c /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
-Linking CXX executable cmTC_597d5
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_597d5.dir/link.txt --verbose=1
-/usr/bin/c++       -rdynamic CMakeFiles/cmTC_597d5.dir/testCXXCompiler.cxx.o  -o cmTC_597d5 
+Building CXX object CMakeFiles/cmTC_1c976.dir/testCXXCompiler.cxx.o
+/usr/bin/c++     -o CMakeFiles/cmTC_1c976.dir/testCXXCompiler.cxx.o -c /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTC_1c976
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1c976.dir/link.txt --verbose=1
+/usr/bin/c++       -rdynamic CMakeFiles/cmTC_1c976.dir/testCXXCompiler.cxx.o  -o cmTC_1c976 
 make[1]: Leaving directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp'
 
 
 Detecting CXX compiler ABI info compiled with the following output:
 Change Dir: /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_7aecc/fast"
-/usr/bin/make -f CMakeFiles/cmTC_7aecc.dir/build.make CMakeFiles/cmTC_7aecc.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_1a352/fast"
+/usr/bin/make -f CMakeFiles/cmTC_1a352.dir/build.make CMakeFiles/cmTC_1a352.dir/build
 make[1]: Entering directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_7aecc.dir/CMakeCXXCompilerABI.cpp.o
-/usr/bin/c++     -o CMakeFiles/cmTC_7aecc.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.10/Modules/CMakeCXXCompilerABI.cpp
-Linking CXX executable cmTC_7aecc
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7aecc.dir/link.txt --verbose=1
-/usr/bin/c++      -v -rdynamic CMakeFiles/cmTC_7aecc.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_7aecc 
+Building CXX object CMakeFiles/cmTC_1a352.dir/CMakeCXXCompilerABI.cpp.o
+/usr/bin/c++     -o CMakeFiles/cmTC_1a352.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.10/Modules/CMakeCXXCompilerABI.cpp
+Linking CXX executable cmTC_1a352
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1a352.dir/link.txt --verbose=1
+/usr/bin/c++      -v -rdynamic CMakeFiles/cmTC_1a352.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_1a352 
 Using built-in specs.
 COLLECT_GCC=/usr/bin/c++
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper
@@ -250,9 +250,9 @@ Thread model: posix
 gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04) 
 COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_7aecc' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
- /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccF6tMYY.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_7aecc /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_7aecc.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o
-COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_7aecc' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_1a352' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccYcdfuO.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_1a352 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_1a352.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_1a352' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
 make[1]: Leaving directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp'
 
 
@@ -260,14 +260,14 @@ Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_7aecc/fast"]
-  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_7aecc.dir/build.make CMakeFiles/cmTC_7aecc.dir/build]
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_1a352/fast"]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_1a352.dir/build.make CMakeFiles/cmTC_1a352.dir/build]
   ignore line: [make[1]: Entering directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp']
-  ignore line: [Building CXX object CMakeFiles/cmTC_7aecc.dir/CMakeCXXCompilerABI.cpp.o]
-  ignore line: [/usr/bin/c++     -o CMakeFiles/cmTC_7aecc.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.10/Modules/CMakeCXXCompilerABI.cpp]
-  ignore line: [Linking CXX executable cmTC_7aecc]
-  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7aecc.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/c++      -v -rdynamic CMakeFiles/cmTC_7aecc.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_7aecc ]
+  ignore line: [Building CXX object CMakeFiles/cmTC_1a352.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/usr/bin/c++     -o CMakeFiles/cmTC_1a352.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.10/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Linking CXX executable cmTC_1a352]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1a352.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/c++      -v -rdynamic CMakeFiles/cmTC_1a352.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_1a352 ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/c++]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper]
@@ -279,13 +279,13 @@ Parsed CXX implicit link information from above output:
   ignore line: [gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04) ]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_7aecc' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccF6tMYY.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_7aecc /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_7aecc.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_1a352' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccYcdfuO.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_1a352 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_1a352.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o]
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/collect2] ==> ignore
     arg [-plugin] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so] ==> ignore
     arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccF6tMYY.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/ccYcdfuO.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -304,7 +304,7 @@ Parsed CXX implicit link information from above output:
     arg [-znow] ==> ignore
     arg [-zrelro] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_7aecc] ==> ignore
+    arg [cmTC_1a352] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o] ==> ignore
@@ -316,7 +316,7 @@ Parsed CXX implicit link information from above output:
     arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
     arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
     arg [-L/usr/lib/gcc/x86_64-linux-gnu/7/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/7/../../..]
-    arg [CMakeFiles/cmTC_7aecc.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [CMakeFiles/cmTC_1a352.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
     arg [-lstdc++] ==> lib [stdc++]
     arg [-lm] ==> lib [m]
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -344,14 +344,14 @@ Parsed CXX implicit link information from above output:
 Detecting CXX [-std=c++1z] compiler features compiled with the following output:
 Change Dir: /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_1ee31/fast"
-/usr/bin/make -f CMakeFiles/cmTC_1ee31.dir/build.make CMakeFiles/cmTC_1ee31.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_3be57/fast"
+/usr/bin/make -f CMakeFiles/cmTC_3be57.dir/build.make CMakeFiles/cmTC_3be57.dir/build
 make[1]: Entering directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_1ee31.dir/feature_tests.cxx.o
-/usr/bin/c++    -std=c++1z -o CMakeFiles/cmTC_1ee31.dir/feature_tests.cxx.o -c /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_1ee31
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1ee31.dir/link.txt --verbose=1
-/usr/bin/c++       -rdynamic CMakeFiles/cmTC_1ee31.dir/feature_tests.cxx.o  -o cmTC_1ee31 
+Building CXX object CMakeFiles/cmTC_3be57.dir/feature_tests.cxx.o
+/usr/bin/c++    -std=c++1z -o CMakeFiles/cmTC_3be57.dir/feature_tests.cxx.o -c /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_3be57
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3be57.dir/link.txt --verbose=1
+/usr/bin/c++       -rdynamic CMakeFiles/cmTC_3be57.dir/feature_tests.cxx.o  -o cmTC_3be57 
 make[1]: Leaving directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp'
 
 
@@ -417,14 +417,14 @@ make[1]: Leaving directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and
 Detecting CXX [-std=c++14] compiler features compiled with the following output:
 Change Dir: /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_7b83a/fast"
-/usr/bin/make -f CMakeFiles/cmTC_7b83a.dir/build.make CMakeFiles/cmTC_7b83a.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_cc361/fast"
+/usr/bin/make -f CMakeFiles/cmTC_cc361.dir/build.make CMakeFiles/cmTC_cc361.dir/build
 make[1]: Entering directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_7b83a.dir/feature_tests.cxx.o
-/usr/bin/c++    -std=c++14 -o CMakeFiles/cmTC_7b83a.dir/feature_tests.cxx.o -c /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_7b83a
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7b83a.dir/link.txt --verbose=1
-/usr/bin/c++       -rdynamic CMakeFiles/cmTC_7b83a.dir/feature_tests.cxx.o  -o cmTC_7b83a 
+Building CXX object CMakeFiles/cmTC_cc361.dir/feature_tests.cxx.o
+/usr/bin/c++    -std=c++14 -o CMakeFiles/cmTC_cc361.dir/feature_tests.cxx.o -c /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_cc361
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_cc361.dir/link.txt --verbose=1
+/usr/bin/c++       -rdynamic CMakeFiles/cmTC_cc361.dir/feature_tests.cxx.o  -o cmTC_cc361 
 make[1]: Leaving directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp'
 
 
@@ -490,14 +490,14 @@ make[1]: Leaving directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and
 Detecting CXX [-std=c++11] compiler features compiled with the following output:
 Change Dir: /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_75df9/fast"
-/usr/bin/make -f CMakeFiles/cmTC_75df9.dir/build.make CMakeFiles/cmTC_75df9.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_b81e9/fast"
+/usr/bin/make -f CMakeFiles/cmTC_b81e9.dir/build.make CMakeFiles/cmTC_b81e9.dir/build
 make[1]: Entering directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_75df9.dir/feature_tests.cxx.o
-/usr/bin/c++    -std=c++11 -o CMakeFiles/cmTC_75df9.dir/feature_tests.cxx.o -c /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_75df9
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_75df9.dir/link.txt --verbose=1
-/usr/bin/c++       -rdynamic CMakeFiles/cmTC_75df9.dir/feature_tests.cxx.o  -o cmTC_75df9 
+Building CXX object CMakeFiles/cmTC_b81e9.dir/feature_tests.cxx.o
+/usr/bin/c++    -std=c++11 -o CMakeFiles/cmTC_b81e9.dir/feature_tests.cxx.o -c /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_b81e9
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b81e9.dir/link.txt --verbose=1
+/usr/bin/c++       -rdynamic CMakeFiles/cmTC_b81e9.dir/feature_tests.cxx.o  -o cmTC_b81e9 
 make[1]: Leaving directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp'
 
 
@@ -563,14 +563,14 @@ make[1]: Leaving directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and
 Detecting CXX [-std=c++98] compiler features compiled with the following output:
 Change Dir: /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_f92d0/fast"
-/usr/bin/make -f CMakeFiles/cmTC_f92d0.dir/build.make CMakeFiles/cmTC_f92d0.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_c0455/fast"
+/usr/bin/make -f CMakeFiles/cmTC_c0455.dir/build.make CMakeFiles/cmTC_c0455.dir/build
 make[1]: Entering directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_f92d0.dir/feature_tests.cxx.o
-/usr/bin/c++    -std=c++98 -o CMakeFiles/cmTC_f92d0.dir/feature_tests.cxx.o -c /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_f92d0
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f92d0.dir/link.txt --verbose=1
-/usr/bin/c++       -rdynamic CMakeFiles/cmTC_f92d0.dir/feature_tests.cxx.o  -o cmTC_f92d0 
+Building CXX object CMakeFiles/cmTC_c0455.dir/feature_tests.cxx.o
+/usr/bin/c++    -std=c++98 -o CMakeFiles/cmTC_c0455.dir/feature_tests.cxx.o -c /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_c0455
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c0455.dir/link.txt --verbose=1
+/usr/bin/c++       -rdynamic CMakeFiles/cmTC_c0455.dir/feature_tests.cxx.o  -o cmTC_c0455 
 make[1]: Leaving directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp'
 
 
@@ -634,28 +634,28 @@ make[1]: Leaving directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and
 Determining if the include file pthread.h exists passed with the following output:
 Change Dir: /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_93752/fast"
-/usr/bin/make -f CMakeFiles/cmTC_93752.dir/build.make CMakeFiles/cmTC_93752.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_42630/fast"
+/usr/bin/make -f CMakeFiles/cmTC_42630.dir/build.make CMakeFiles/cmTC_42630.dir/build
 make[1]: Entering directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_93752.dir/CheckIncludeFile.c.o
-/usr/bin/cc    -o CMakeFiles/cmTC_93752.dir/CheckIncludeFile.c.o   -c /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp/CheckIncludeFile.c
-Linking C executable cmTC_93752
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_93752.dir/link.txt --verbose=1
-/usr/bin/cc      -rdynamic CMakeFiles/cmTC_93752.dir/CheckIncludeFile.c.o  -o cmTC_93752 
+Building C object CMakeFiles/cmTC_42630.dir/CheckIncludeFile.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_42630.dir/CheckIncludeFile.c.o   -c /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_42630
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_42630.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_42630.dir/CheckIncludeFile.c.o  -o cmTC_42630 
 make[1]: Leaving directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp'
 
 
 Determining if the function pthread_create exists in the pthread passed with the following output:
 Change Dir: /home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_1a213/fast"
-/usr/bin/make -f CMakeFiles/cmTC_1a213.dir/build.make CMakeFiles/cmTC_1a213.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_9ea20/fast"
+/usr/bin/make -f CMakeFiles/cmTC_9ea20.dir/build.make CMakeFiles/cmTC_9ea20.dir/build
 make[1]: Entering directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_1a213.dir/CheckFunctionExists.c.o
-/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_1a213.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.10/Modules/CheckFunctionExists.c
-Linking C executable cmTC_1a213
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1a213.dir/link.txt --verbose=1
-/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_1a213.dir/CheckFunctionExists.c.o  -o cmTC_1a213 -lpthread 
+Building C object CMakeFiles/cmTC_9ea20.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_9ea20.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.10/Modules/CheckFunctionExists.c
+Linking C executable cmTC_9ea20
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9ea20.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_9ea20.dir/CheckFunctionExists.c.o  -o cmTC_9ea20 -lpthread 
 make[1]: Leaving directory '/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/build/set_goal/CMakeFiles/CMakeTmp'
 
 

@@ -1,0 +1,32 @@
+[  0%] Built target std_msgs_generate_messages_nodejs
+[  0%] Built target _Pick_and_Delivery_generate_messages_check_deps_NewGoal
+[  0%] Built target sensor_msgs_generate_messages_nodejs
+[  0%] Built target nav_msgs_generate_messages_nodejs
+[  0%] Built target geometry_msgs_generate_messages_nodejs
+[  0%] Built target tf2_msgs_generate_messages_nodejs
+[  0%] Built target tf2_msgs_generate_messages_eus
+[  0%] Built target nav_msgs_generate_messages_eus
+[  0%] Built target sensor_msgs_generate_messages_eus
+[  0%] Built target geometry_msgs_generate_messages_eus
+[  0%] Built target std_msgs_generate_messages_eus
+[  0%] Built target tf2_msgs_generate_messages_py
+[  0%] Built target nav_msgs_generate_messages_py
+[  0%] Built target sensor_msgs_generate_messages_py
+[  0%] Built target std_msgs_generate_messages_py
+[  0%] Built target geometry_msgs_generate_messages_py
+[  0%] Built target tf2_msgs_generate_messages_lisp
+[  0%] Built target nav_msgs_generate_messages_lisp
+[  0%] Built target sensor_msgs_generate_messages_lisp
+[  0%] Built target std_msgs_generate_messages_lisp
+[  0%] Built target geometry_msgs_generate_messages_lisp
+[  0%] Built target tf2_msgs_generate_messages_cpp
+[  0%] Built target nav_msgs_generate_messages_cpp
+[  0%] Built target sensor_msgs_generate_messages_cpp
+[  0%] Built target std_msgs_generate_messages_cpp
+[  0%] Built target geometry_msgs_generate_messages_cpp
+[ 14%] Built target Pick_and_Delivery_generate_messages_nodejs
+[ 42%] Built target Pick_and_Delivery_generate_messages_eus
+[ 71%] Built target Pick_and_Delivery_generate_messages_py
+[ 85%] Built target Pick_and_Delivery_generate_messages_lisp
+[100%] Built target Pick_and_Delivery_generate_messages_cpp
+[100%] Built target Pick_and_Delivery_generate_messages

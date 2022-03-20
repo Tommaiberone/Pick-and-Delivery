@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 #!/usr/bin/env python2
 
 import numpy
@@ -10,7 +9,7 @@ from geometry_msgs.msg import TransformStamped
 from geometry_msgs.msg import PoseStamped
 from tf2_msgs.msg import TFMessage
 import tf2_ros
-from NewGoal.msg import NewGoal
+from set_goal.msg import NewGoal
 
 class elem:
     published = 0

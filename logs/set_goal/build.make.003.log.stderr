@@ -1,7 +1,0 @@
-[01m[K/home/me/Desktop/labiagi_2020_21/workspaces/Pick-and-Delivery/src/set_goal/set_goal.cpp:1:10:[m[K [01;31m[Kfatal error: [m[Kros/ros.h: No such file or directory
- #include [01;31m[K"ros/ros.h"[m[K
-          [01;31m[K^~~~~~~~~~~[m[K
-compilation terminated.
-make[2]: *** [CMakeFiles/set_goal.dir/set_goal.cpp.o] Error 1
-make[1]: *** [CMakeFiles/set_goal.dir/all] Error 2
-make: *** [all] Error 2
