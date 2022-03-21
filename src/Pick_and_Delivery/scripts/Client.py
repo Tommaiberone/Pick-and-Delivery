@@ -29,10 +29,9 @@ def client_program():
         print('>>' + messaggio_ricevuto)  # show in terminal
 
         if messaggio_ricevuto == " -> ":
+            
             messaggio_da_inviare = raw_input("")  # again take input
-            if DEBUG: print("Mando il messaggio...")
             client_socket.send(messaggio_da_inviare)  # send message
-            if DEBUG: print("Mandato, aspetto una risposta...")
 
         time.sleep(.4)
 
