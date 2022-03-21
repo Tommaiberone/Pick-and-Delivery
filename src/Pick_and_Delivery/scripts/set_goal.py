@@ -115,8 +115,12 @@ if __name__ == '__main__':
         timer_incastrato            = rospy.Timer(      rospy.Duration(6),                           timer_incastrato_check)
 
         while not rospy.is_shutdown():
+
             if robottino.info_ricevute != 0:
+                #if DEBUG:   print("\n\n Ho dato indicazioni di andare a: x:{}, y{}".
+                #            format(new_goal_msg.pose.position.x, new_goal_msg.pose.position.y))
                 publisher_posizione.publish(new_goal_msg)
+            
             rate.sleep()
 
     except rospy.ROSInterruptException:
