@@ -18,6 +18,7 @@ def client_program():
     port = 12345  # socket server port number
 
     client_socket = socket.socket()  # instantiate
+    client_socket.settimeout(3000)
     client_socket.connect((host, port))  # connect to the server
 
 
@@ -26,6 +27,15 @@ def client_program():
         
         messaggio_ricevuto = client_socket.recv(SIZE)  # receive response
 
+        if (not messaggio_ricevuto):
+            if DEBUG: 
+                print("La recv si e' bloccata!\n")
+                try: 
+                    client_socket.close()  # close the connection
+                except socket.error as e:
+                    print ("Caught exception socket.error :", e)
+                exit(0)
+
         print('>>' + messaggio_ricevuto)  # show in terminal
 
         if messaggio_ricevuto == " -> ":
@@ -33,15 +43,15 @@ def client_program():
             messaggio_da_inviare = raw_input("")  # again take input
             client_socket.send(messaggio_da_inviare)  # send message
 
+        elif messaggio_ricevuto == "Arrivederci e grazie per aver usato il nostro servizio!":
+
+            print("Ricevuto il comando di arresto, chiudo la connessione...")
+            try: client_socket.close()  # close the connection
+            except socket.error as e:
+                print ("Caught exception socket.error :", e)
+            break
+
         time.sleep(.4)
-
-
-
-    print("Ricevuto il comando di arresto, chiudo la connessione...")
-
-    try: client_socket.close()  # close the connection
-    except socket.error as e:
-        print ("Caught exception socket.error :", e)
 
 
 def check_user():
@@ -74,7 +84,7 @@ if __name__ == '__main__':
 
     while True:
 
-        print("Ciao", username, "vuoi inviare un pacchetto? [s/n]\n")
+        print("Ciao {}, vuoi inviare un pacchetto? [s/n]\n".format(username))
         message = raw_input(" -> ")
 
         if message.lower().strip() == 'n':

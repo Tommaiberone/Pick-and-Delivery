@@ -24,8 +24,8 @@ class robot:
 
 def move_to_goal_callback(new_goal):
 
-    if DEBUG: rospy.loginfo("Ho ricevuto una nuova destinazione\n")
-    if DEBUG: rospy.loginfo("Mi dirigo alla posizione x:{}, y:{}".format(new_goal.x, new_goal.y))
+    if DEBUG: print("Ho ricevuto una nuova destinazione\n")
+    if DEBUG: print("Mi dirigo alla posizione x:{}, y:{}".format(new_goal.x, new_goal.y))
 
     new_goal_msg.header.seq = robottino.Numero_comandi
     robottino.Numero_comandi+=1
@@ -67,7 +67,7 @@ def timer_check_status(event = None):
         if math.sqrt(math.pow(robottino.current_position[0]-robottino.target_position[0], 2)+ 
                      math.pow(robottino.current_position[1]-robottino.target_position[1], 2)) < 1.5:
 
-            rospy.loginfo("Sono arrivato a destinazione")
+            if DEBUG: print("Sono arrivato a destinazione")
 
             publisher_check_status.publish("Arrived")
             robottino.moving = 0
@@ -88,14 +88,9 @@ def timer_incastrato_check(event = None):
 
         if position_x1 == position_x2 and position_y1 == position_y2:
 
-            rospy.loginfo("Sono bloccato!")
+            print("Sono bloccato!")
             publisher_check_status.publish('Stuck')
             robottino.moving = 0
-
-#def distance_callback(pos):
- #   rospy.loginfo("Mi separa (distance dalla meta")
-  #  dist = math.sqrt(math.pow(robottino.current_position[0]-pos.x, 2)+ math.pow(robottino.current_position[1]-pos.y, 2))
-   # pubDist.publish(dist)
             
 
 if __name__ == '__main__':
@@ -120,8 +115,12 @@ if __name__ == '__main__':
         timer_incastrato            = rospy.Timer(      rospy.Duration(6),                           timer_incastrato_check)
 
         while not rospy.is_shutdown():
+
             if robottino.info_ricevute != 0:
+                #if DEBUG:   print("\n\n Ho dato indicazioni di andare a: x:{}, y{}".
+                #            format(new_goal_msg.pose.position.x, new_goal_msg.pose.position.y))
                 publisher_posizione.publish(new_goal_msg)
+            
             rate.sleep()
 
     except rospy.ROSInterruptException:
