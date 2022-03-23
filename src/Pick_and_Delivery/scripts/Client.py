@@ -3,6 +3,7 @@ import socket
 import time
 
 DEBUG = True
+CHATTY = True
 SIZE = 1024
 
 Database =  {   "Tommaso"   :   "Password_Tommaso",
@@ -28,13 +29,12 @@ def client_program():
         messaggio_ricevuto = client_socket.recv(SIZE)  # receive response
 
         if (not messaggio_ricevuto):
-            if DEBUG: 
-                print("La recv si e' bloccata!\n")
-                try: 
-                    client_socket.close()  # close the connection
-                except socket.error as e:
-                    print ("Caught exception socket.error :", e)
-                exit(0)
+            print("La recv si e' bloccata!\n")
+            try: 
+                client_socket.close()  # close the connection
+            except socket.error as e:
+                print ("Caught exception socket.error :", e)
+            exit(0)
 
         print('>>' + messaggio_ricevuto)  # show in terminal
 
@@ -84,7 +84,7 @@ if __name__ == '__main__':
 
     while True:
 
-        print("Ciao {}, vuoi inviare un pacchetto? [s/n]\n".format(username))
+        print("Ciao {}, vuoi inviare un pacchetto? [s/n]".format(username))
         message = raw_input(" -> ")
 
         if message.lower().strip() == 'n':
