@@ -94,7 +94,9 @@ def arrivederci(client):
 		print("STATS ROBOTTINO:\n\ncoming_to_client: {},\ngoing_to_goal: {},\nbusy: {}\n\n".
 				format(robottino.coming_to_client, robottino.going_to_goal, robottino.busy))
 
-
+#Funzione di callback per il listener sul topic /Arrived
+#Viene eseguita ad ogni nuovo messaggio su tale topic, e
+#si comporta in modo diverso a seconda del messaggio che ha ricevuto
 def status_callback(msg, client):
 
 	if DEBUG: print("Ho ricevuto il messaggio {} dal topic \Arrived".format(msg))
