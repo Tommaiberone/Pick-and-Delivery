@@ -72,7 +72,7 @@ def position_callback(tf):
         #trasformazione ottenuta con:
         #   -   source_frame = base_link
         #   -   target_frame = map
-        #   -   rospy.Time(0) fa sì che i parametri di cui sopra siano gli ultimi disponibili
+        #   -   rospy.Time(0) fa si' che i parametri di cui sopra siano gli ultimi disponibili
         transformation = TransformStamped()
         transformation = transformCalculator.lookup_transform('map', 'base_link', rospy.Time(0))
         
@@ -81,7 +81,7 @@ def position_callback(tf):
         robottino.current_position[1] = transformation.transform.translation.y
 
 #Funzione di callback per il timer "timer_arrivato"
-#Viene chiamato ogni 0.5 secondi e verifica se il robot è arrivato a destinazione
+#Viene chiamato ogni 0.5 secondi e verifica se il robot e' arrivato a destinazione
 def timer_check_status(event = None):
 
     #Controlla che il robot sia in movimento: altrimenti continuerebbe a pubblicare
@@ -99,7 +99,7 @@ def timer_check_status(event = None):
             robottino.moving = False
 
 #Funzione di callback per il timer "timer_incastrato"
-#Viene chiamato ogni 6 secondi e verifica se il robot è rimasto incastrato
+#Viene chiamato ogni 6 secondi e verifica se il robot e' rimasto incastrato
 def timer_incastrato_check(event = None):
 
     #Controlla che il robot pensi di essere in movimento: altrimenti continuerebbe a pubblicare

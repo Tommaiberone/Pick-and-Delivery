@@ -47,7 +47,7 @@ def client_program():
         print('>>' + messaggio_ricevuto)
 
         #Accetta un input dall'utente se il server si predispone
-        #in modalità di "ascolto"
+        #in modalita' di "ascolto"
         if messaggio_ricevuto == " -> ":    
 
             messaggio_da_inviare = raw_input("")

@@ -15,6 +15,7 @@ SIZE = 1024
 ARRIVATO_MSG = "Arrived"
 BLOCCATO_MSG = "Stuck"
 
+#Inizializza la classe Utente, con l'username e i parametri di posizione
 class Utente:
 
 	Username				=	""
@@ -28,7 +29,13 @@ class Utente:
 		self.posizione_y = y
 		self.posizione_theta = theta
 
-
+#Inizializza la classe robot, che prende come parametri:
+#	-	Dei parametri di controllo
+# 	-	L'inizializzazione del listener al topic \Arrived
+#	-	I parametri di navigazione, che consistono in 
+#	-	-	Posizione del robot
+#	-	-	Nome del destinatario
+#	-	-	Posizione del destinatario
 class robot:
 
 	going_to_goal 						= 	False
@@ -37,7 +44,8 @@ class robot:
 	talking								= 	False 	#Flag per evitare che il robottino venga segnalato come bloccato
 													#quando e' in attesa di una risposta del client
 
-	Status_checker						=	""
+	Status_checker						=	""		#Lo status_checker viene direttamente istanziata alla creazione di un'istanza
+													#per evitare un bug che avveniva all'iscrizione di nuovi thread al topic \arrived
 	
 	posizione_x							=	0
 	posizione_y							=	0
@@ -50,14 +58,17 @@ class robot:
 	posizione_destinatario_theta		= 	0
 
 
-Utenti =  	{ 	"Tommaso" 	: 	Utente	("Tommaso", 	11.1,	11.4,	0),
+#Inizializzo gli utenti e le relative posizioni
+Utenti =  	{ 	
+				"Tommaso" 	: 	Utente	("Tommaso", 	11.1,	11.4,	0),
 				"Filippo" 	:	Utente	("Filippo", 	19.8,	13.1,	0),
 				"Federico" 	:	Utente	("Federico", 	21.9,	11.4,	0),
 				"Luigi"		:	Utente	("Luigi", 		37.1,	13.1,	0),
 				"Carlo"		:	Utente	("Carlo", 		24.1,	13.5,	0)
 			}	
 
-
+#Mette il thread principale in ascolto su una porta, crea un nuovo 
+# thread per ogni nuovo client e gli assegna la sua gestione
 def listen(sock):
 
 	if CHATTY : print("Mi metto in ascolto sulla porta...")
@@ -69,19 +80,22 @@ def listen(sock):
 		threading.Thread(target = client_handle_thread,args = (client,address)).start()
 
 
+#Manda il messaggio di benvenuto al client e si mette in ascolto di una sua risposta
 def benvenuto(client):
 
 	client.send("Ciao! Dimmi come ti chiami cosi' vengo a prendere il pacco\n")
 	time.sleep(.5)
 	client.send(" -> ")
 
-
+#Funzione che viene chiamata quando il robottino termina la missione di un client
 def arrivederci(client):
 
+	#Resetta i parametri di controllo
 	robottino.coming_to_client = False
 	robottino.going_to_goal = False
 	robottino.busy = False
 
+	#Saluta e chiude la connessione con il client
 	client.send("Fatto! Ho portato con successo il tuo pacco a destinazione!\n")
 	time.sleep(.5)
 	client.send("Arrivederci e grazie per aver usato il nostro servizio!")
@@ -101,20 +115,36 @@ def status_callback(msg, client):
 
 	if DEBUG: print("Ho ricevuto il messaggio {} dal topic \Arrived".format(msg))
 
+	#Se il messaggio ricevuto indica che il robottino e' giunto a destinazione
+	#il robottino passa allo step successivo
 	if (msg.data.lower() == ARRIVATO_MSG.lower()):
 		next_step(client)
 	
+	#Se il messaggio ricevuto indica che il robottino e' bloccato
+	#Informa il client e chiude la comunicazione
 	elif (msg.data.lower() == BLOCCATO_MSG.lower()):
 		if not robottino.talking:
 			bloccato(client)
 
-
+#Annuncia al client che la consegna e' bloccata
 def bloccato(client):
  
 	if CHATTY: print("Il robot e' bloccato\n")
 	client.send("Ci dispiace, purtroppo la consegna e' bloccata!!\n")
 
+#Chiede al client di ripetere qualora questo fornisca 
+# un messaggio che non viene riconosciuto
+def richiesta_sconosciuta(client):	
+	client.send("Ricevuta richiesta sconosciuta\n")
+	time.sleep(.5)
+	client.send("Per favore elabora...\n")
+	time.sleep(.5)
+	client.send(" -> ")
+	time.sleep(.5)
+	robottino.talking = True;	
 
+#Fa ripetere al client il nome del mittente o del destinatario,
+#nel caso quello indicato non fosse presente nel database
 def nome_sconosciuto(client):
 
 	client.send("Il nome non risulta essere nel database...\n")
@@ -135,14 +165,24 @@ def nome_sconosciuto(client):
 
 	return messaggio_ricevuto.strip()
 
-
+#Aggiorna le indicazioni del robottino in seguito ad uno 
+# step completato (pacco recapitato, pacco preso in carico)
 def next_step(client):
 
-	if robottino.coming_to_client == True:
+	#Se il robottino stava consegnando il pacco vuol dire che ora l'ha consegnato
+	#ed e' pronto per una nuova missione
+	#Quindi saluta il client
+	if robottino.going_to_goal == True:
+		arrivederci(client)
+
+	#Se il robottino invece stava venendo a prendere il pacco vuol dire che ora
+	#e' pronto a portarlo a destinazione
+	elif robottino.coming_to_client == True:
 
 		robottino.going_to_goal = True
 		robottino.coming_to_client = False
 
+		#Il robottino si sincera del destinatario del pacchetto
 		client.send("Eccomi! A chi vuoi portare il pacco?\n")
 		time.sleep(.5)
 		client.send(" -> ")
@@ -163,37 +203,37 @@ def next_step(client):
 
 		if DEBUG: print("Il nome del destinatario e': {}".format(nome_destinatario))
 
-		posizione_destinatario = 	( 	Utenti[nome_destinatario].posizione_x,
-										Utenti[nome_destinatario].posizione_y,
-										Utenti[nome_destinatario].posizione_theta
-									)
-
-		robottino.posizione_destinatario_x = posizione_destinatario[0]
-		robottino.posizione_destinatario_y = posizione_destinatario[1]
-		robottino.posizione_destinatario_theta = posizione_destinatario[2]
+		#Imposta le variabili di destinazione del robottino sulla base della posizione del destinatario
+		robottino.posizione_destinatario_x 		= 	Utenti[nome_destinatario].posizione_x
+		robottino.posizione_destinatario_y 		= 	Utenti[nome_destinatario].posizione_y
+		robottino.posizione_destinatario_theta 	= 	Utenti[nome_destinatario].posizione_theta
 
 		if DEBUG: print("La posizione del destinatario e': x={}, y={}, theta={}\n".
-			format(posizione_destinatario[0], posizione_destinatario[1], posizione_destinatario[2]))
+			format(robottino.posizione_destinatario_x, robottino.posizione_destinatario_y , robottino.posizione_destinatario_theta))
 
 		client.send("Ok! Porto subito il tuo pacco a {}\n".format(nome_destinatario))
 
+		#Invoca la funzione che determina l'effettivo movimento del robot
 		vai_a(client, robottino.nome_destinatario, (robottino.posizione_destinatario_x, 
 													robottino.posizione_destinatario_y, 
 													robottino.posizione_destinatario_theta))
 	
-	elif robottino.going_to_goal == True:
-		arrivederci(client)
 
 
-#Un thread si occupa di un client dopo essersi connesso
+#Questa e' la funzione invocata inizialmente da ogni thread
+#Ogni thread si occupa di un client dopo che questo si e' connesso al server
 def client_handle_thread(client, address):
 
+	#Il client viene messo in attesa finche' il robottino non sara' pronto
+	#per una nuova missione
 	while robottino.busy == True:
 		client.send("Robot temporaneamente occupato, riprovo in qualche istante...\n")
 		time.sleep(5)
 
 	robottino.busy = True 
 	
+	#Manda il messaggio di benvenuto al client e chiede la posizione 
+	#alla quale deve andare a prendere il pacchetto
 	benvenuto(client)
 
 	try:
@@ -213,12 +253,12 @@ def client_handle_thread(client, address):
 		nome_richiedente = nome_sconosciuto(client)
 
 	#Ogni thread si iscrive alla topic /Arrived
-	robottino.Status_checker = 	rospy.Subscriber("/Arrived", String,
-						status_callback, client)
+	robottino.Status_checker = 	rospy.Subscriber("/Arrived", String, status_callback, client)
 
 	if DEBUG: print("Il nome del richiedente e': {}".format(nome_richiedente))
-	
 	client.send("Ciao {}! Vengo subito a prendere il pacco:\n".format(nome_richiedente))
+
+	#Imposta la destinazione e invoca la funzione vai_a
 	posizione_richiedente = (	Utenti[nome_richiedente].posizione_x,
 								Utenti[nome_richiedente].posizione_y,
 								Utenti[nome_richiedente].posizione_theta
@@ -227,12 +267,11 @@ def client_handle_thread(client, address):
 	if DEBUG: print("La posizione del richiedente e': x={}, y={}, theta={}\n".
 				format(posizione_richiedente[0], posizione_richiedente[1], posizione_richiedente[2]))
 
-
 	robottino.coming_to_client = True
 
 	vai_a (client, nome_richiedente, posizione_richiedente)				
 
-
+#Pubblica sul topic \NewGoal i parametri di destinazione che gli vengono forniti in input
 def vai_a(client, nome_destinazione, posizione_destinazione):
 
 	if CHATTY and robottino.coming_to_client == True: 
@@ -257,27 +296,21 @@ def vai_a(client, nome_destinazione, posizione_destinazione):
 		client.send("Ho impostato correttamente la destinazione, " +
 					"porto subito il tuo pacchetto\n")
 
-	
-def richiesta_sconosciuta(client):	
-	client.send("Ricevuta richiesta sconosciuta\n")
-	time.sleep(.5)
-	client.send("Per favore elabora...\n")
-	time.sleep(.5)
-	client.send(" -> ")
-	time.sleep(.5)
-	robottino.talking = True;	
-	
-
 if __name__ == "__main__":
 
+	#Inizializza il nodo ROS del server
 	rospy.init_node('server', anonymous=True)
+
+	#Imposta il publisher sul topic \New_Goal
 	NewGoal_Publisher = rospy.Publisher('New_Goal', NewGoal, queue_size=10)
 	rate = rospy.Rate(10)
 
+	#Inizializza il robottino
 	robottino = robot()
     
 	if (DEBUG): print("Creo la socket del server...")
 
+	#Crea la socket del server
 	server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	server_socket.settimeout(3000)
 	server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -285,4 +318,6 @@ if __name__ == "__main__":
 	if (DEBUG): print("Faccio il bind della socket alla porta 12345")
 
 	server_socket.bind((HOST, PORT))
+
+	#Si mette in attesa di client
 	listen(server_socket)
