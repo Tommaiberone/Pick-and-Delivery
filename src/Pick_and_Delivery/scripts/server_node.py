@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import time
+import Queue
 import socket
 import threading
 import rospy
@@ -9,7 +10,7 @@ from Pick_and_Delivery.msg import NewGoal
 
 HOST = "localhost"
 PORT = 12345
-DEBUG = False
+DEBUG = True
 CHATTY = True
 SIZE = 1024
 ARRIVATO_MSG = "Arrived"
@@ -69,16 +70,35 @@ Utenti =  	{
 
 #Mette il thread principale in ascolto su una porta, crea un nuovo 
 # thread per ogni nuovo client e gli assegna la sua gestione
-def listen(sock):
+def listen(sock, fifo):
 
 	if CHATTY : print("Mi metto in ascolto sulla porta...")
 	sock.listen(5)
 	
 	while True:
 		client, address = sock.accept()
-		if DEBUG : print("Connesso al client {} con indirizzo {}\n".format(client, address))
-		threading.Thread(target = client_handle_thread,args = (client,address)).start()
+		fifo.put([client, address])
+		robot_occupato_check(client, address)
+		if DEBUG : print("Inserito in coda il client {} con indirizzo {}\n".format(client, address))
 
+		
+
+def robot_occupato_check(client, address):
+	if robottino.busy:
+		client.send("Ciao! Il robottino al momento e' occupato, ti metto in comunicazione appena possibile\n")
+	
+
+def start_thread(fifo):
+
+	print("Sono dentro!")
+
+	while True:
+		if not fifo.empty() and not robottino.busy:
+
+			print("Sono dentrissimo")
+
+			[client, address] = fifo.get()
+			threading.Thread(target = client_handle_thread,args = (client,address)).start()
 
 #Manda il messaggio di benvenuto al client e si mette in ascolto di una sua risposta
 def benvenuto(client):
@@ -165,6 +185,52 @@ def nome_sconosciuto(client):
 
 	return messaggio_ricevuto.strip()
 
+#Questa e' la funzione invocata inizialmente da ogni thread
+#Ogni thread si occupa di un client dopo che questo si e' connesso al server
+def client_handle_thread(client, address):
+
+	robottino.busy = True 
+	
+	#Manda il messaggio di benvenuto al client e chiede la posizione 
+	#alla quale deve andare a prendere il pacchetto
+	benvenuto(client)
+
+	try:
+		richiesta_ricevuta = client.recv(SIZE)
+	except:
+		print ("Il client con indirizzo {} si e' disconnesso in modo inaspettato".format(address))
+		client.close()
+		return False
+
+	robottino.talking = False
+
+	nome_richiedente = richiesta_ricevuta.strip()
+
+	if DEBUG: print("Ho ricevuto il messaggio {}, \n".format(nome_richiedente))
+
+	while nome_richiedente not in Utenti.keys():
+		nome_richiedente = nome_sconosciuto(client)
+
+	#Ogni thread si iscrive alla topic /Arrived
+	robottino.Status_checker = 	rospy.Subscriber("/Arrived", String, status_callback, client)
+
+	if DEBUG: print("Il nome del richiedente e': {}".format(nome_richiedente))
+	client.send("Ciao {}! Vengo subito a prendere il pacco:\n".format(nome_richiedente))
+
+	#Imposta la destinazione e invoca la funzione vai_a
+	posizione_richiedente = (	Utenti[nome_richiedente].posizione_x,
+								Utenti[nome_richiedente].posizione_y,
+								Utenti[nome_richiedente].posizione_theta
+							)
+
+	if DEBUG: print("La posizione del richiedente e': x={}, y={}, theta={}\n".
+				format(posizione_richiedente[0], posizione_richiedente[1], posizione_richiedente[2]))
+
+	robottino.coming_to_client = True
+
+	vai_a (client, nome_richiedente, posizione_richiedente)
+
+
 #Aggiorna le indicazioni del robottino in seguito ad uno 
 # step completato (pacco recapitato, pacco preso in carico)
 def next_step(client):
@@ -217,59 +283,7 @@ def next_step(client):
 		vai_a(client, robottino.nome_destinatario, (robottino.posizione_destinatario_x, 
 													robottino.posizione_destinatario_y, 
 													robottino.posizione_destinatario_theta))
-	
-
-
-#Questa e' la funzione invocata inizialmente da ogni thread
-#Ogni thread si occupa di un client dopo che questo si e' connesso al server
-def client_handle_thread(client, address):
-
-	#Il client viene messo in attesa finche' il robottino non sara' pronto
-	#per una nuova missione
-	while robottino.busy == True:
-		client.send("Robot temporaneamente occupato, riprovo in qualche istante...\n")
-		time.sleep(5)
-
-	robottino.busy = True 
-	
-	#Manda il messaggio di benvenuto al client e chiede la posizione 
-	#alla quale deve andare a prendere il pacchetto
-	benvenuto(client)
-
-	try:
-		richiesta_ricevuta = client.recv(SIZE)
-	except:
-		print ("Il client con indirizzo {} si e' disconnesso in modo inaspettato".format(address))
-		client.close()
-		return False
-
-	robottino.talking = False
-
-	nome_richiedente = richiesta_ricevuta.strip()
-
-	if DEBUG: print("Ho ricevuto il messaggio {}, \n".format(nome_richiedente))
-
-	while nome_richiedente not in Utenti.keys():
-		nome_richiedente = nome_sconosciuto(client)
-
-	#Ogni thread si iscrive alla topic /Arrived
-	robottino.Status_checker = 	rospy.Subscriber("/Arrived", String, status_callback, client)
-
-	if DEBUG: print("Il nome del richiedente e': {}".format(nome_richiedente))
-	client.send("Ciao {}! Vengo subito a prendere il pacco:\n".format(nome_richiedente))
-
-	#Imposta la destinazione e invoca la funzione vai_a
-	posizione_richiedente = (	Utenti[nome_richiedente].posizione_x,
-								Utenti[nome_richiedente].posizione_y,
-								Utenti[nome_richiedente].posizione_theta
-							)
-
-	if DEBUG: print("La posizione del richiedente e': x={}, y={}, theta={}\n".
-				format(posizione_richiedente[0], posizione_richiedente[1], posizione_richiedente[2]))
-
-	robottino.coming_to_client = True
-
-	vai_a (client, nome_richiedente, posizione_richiedente)				
+					
 
 #Pubblica sul topic \NewGoal i parametri di destinazione che gli vengono forniti in input
 def vai_a(client, nome_destinazione, posizione_destinazione):
@@ -307,7 +321,10 @@ if __name__ == "__main__":
 
 	#Inizializza il robottino
 	robottino = robot()
-    
+
+	#Inizializza la coda con paradigma FIFO
+	fifo = Queue.Queue()
+
 	if (DEBUG): print("Creo la socket del server...")
 
 	#Crea la socket del server
@@ -320,4 +337,5 @@ if __name__ == "__main__":
 	server_socket.bind((HOST, PORT))
 
 	#Si mette in attesa di client
-	listen(server_socket)
+	threading.Thread(target = listen,args = (server_socket, fifo)).start()
+	start_thread(fifo)

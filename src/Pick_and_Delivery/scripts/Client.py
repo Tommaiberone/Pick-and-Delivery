@@ -57,7 +57,7 @@ def client_program():
         #Chiude la connessione con il server se riceve il messaggio di chiusura
         elif messaggio_ricevuto == "Arrivederci e grazie per aver usato il nostro servizio!":
 
-            print("Ricevuto il comando di arresto, chiudo la connessione...")
+            if DEBUG: print("Ricevuto il comando di arresto, chiudo la connessione...")
             try: client_socket.close()
             except socket.error as e:
                 print ("Caught exception socket.error :", e)
