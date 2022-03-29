@@ -68,35 +68,41 @@ Utenti =  	{
 				"Carlo"		:	Utente	("Carlo", 		24.1,	13.5,	0)
 			}	
 
-#Mette il thread principale in ascolto su una porta, crea un nuovo 
-# thread per ogni nuovo client e gli assegna la sua gestione
+#Mette il thread principale in ascolto su una porta. 
+#Ogni client che si connette viene messo in coda
 def listen(sock, fifo):
 
 	if CHATTY : print("Mi metto in ascolto sulla porta...")
 	sock.listen(5)
 	
 	while True:
+		
+		#Accetta una nuova connessione
 		client, address = sock.accept()
+
+		#Mette in coda il client
 		fifo.put([client, address])
-		robot_occupato_check(client, address)
+
+		#Controlla se il robot è occupato
+		robot_occupato_check(client)
+
 		if DEBUG : print("Inserito in coda il client {} con indirizzo {}\n".format(client, address))
 
 		
-
-def robot_occupato_check(client, address):
+# Funzione che controlla se il robot è occupato. In caso positivo manda un messaggio 
+# al client in cui lo avverte che è stato messo in attesa 
+def robot_occupato_check(client):
 	if robottino.busy:
 		client.send("Ciao! Il robottino al momento e' occupato, ti metto in comunicazione appena possibile\n")
 	
 
+# Funzione che, quando il robottino non è occupato e ci sta qualche client in attesa di essere servito,
+# starta un thread che prende in carico la richiesta	
 def start_thread(fifo):
 
-	print("Sono dentro!")
-
 	while True:
+		
 		if not fifo.empty() and not robottino.busy:
-
-			print("Sono dentrissimo")
-
 			[client, address] = fifo.get()
 			threading.Thread(target = client_handle_thread,args = (client,address)).start()
 
@@ -146,11 +152,13 @@ def status_callback(msg, client):
 		if not robottino.talking:
 			bloccato(client)
 
+
 #Annuncia al client che la consegna e' bloccata
 def bloccato(client):
  
 	if CHATTY: print("Il robot e' bloccato\n")
 	client.send("Ci dispiace, purtroppo la consegna e' bloccata!!\n")
+
 
 #Chiede al client di ripetere qualora questo fornisca 
 # un messaggio che non viene riconosciuto
@@ -162,6 +170,7 @@ def richiesta_sconosciuta(client):
 	client.send(" -> ")
 	time.sleep(.5)
 	robottino.talking = True;	
+
 
 #Fa ripetere al client il nome del mittente o del destinatario,
 #nel caso quello indicato non fosse presente nel database
@@ -185,8 +194,8 @@ def nome_sconosciuto(client):
 
 	return messaggio_ricevuto.strip()
 
-#Questa e' la funzione invocata inizialmente da ogni thread
-#Ogni thread si occupa di un client dopo che questo si e' connesso al server
+
+#Questa e' la funzione invocata inizialmente da ogni thread che ha preso in carico un client
 def client_handle_thread(client, address):
 
 	robottino.busy = True 
@@ -208,6 +217,7 @@ def client_handle_thread(client, address):
 
 	if DEBUG: print("Ho ricevuto il messaggio {}, \n".format(nome_richiedente))
 
+	#Si accerta che il nome del richiedente sia tra quelli la cui posizione è nota
 	while nome_richiedente not in Utenti.keys():
 		nome_richiedente = nome_sconosciuto(client)
 
@@ -217,7 +227,7 @@ def client_handle_thread(client, address):
 	if DEBUG: print("Il nome del richiedente e': {}".format(nome_richiedente))
 	client.send("Ciao {}! Vengo subito a prendere il pacco:\n".format(nome_richiedente))
 
-	#Imposta la destinazione e invoca la funzione vai_a
+	#Imposta la destinazione
 	posizione_richiedente = (	Utenti[nome_richiedente].posizione_x,
 								Utenti[nome_richiedente].posizione_y,
 								Utenti[nome_richiedente].posizione_theta
@@ -228,6 +238,7 @@ def client_handle_thread(client, address):
 
 	robottino.coming_to_client = True
 
+	#Invoca la funzione che determina l'effettivo movimento del robot
 	vai_a (client, nome_richiedente, posizione_richiedente)
 
 
@@ -336,6 +347,9 @@ if __name__ == "__main__":
 
 	server_socket.bind((HOST, PORT))
 
-	#Si mette in attesa di client
+	#Crea il thread il cui scopo è mettere in coda i client in arrivo
 	threading.Thread(target = listen,args = (server_socket, fifo)).start()
+
+	#Lancia la funzione che preleva i client dalla coda e li mette in comunicazione
+	# con il robottino tramite la creazione di nuovi thread
 	start_thread(fifo)
