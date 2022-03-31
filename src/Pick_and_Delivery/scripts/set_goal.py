@@ -3,6 +3,7 @@
 import numpy
 import math 
 from time import sleep
+from Client import CHATTY
 from std_msgs.msg import String, Float32
 import rospy
 from geometry_msgs.msg import TransformStamped
@@ -11,14 +12,15 @@ from tf2_msgs.msg import TFMessage
 import tf2_ros
 from Pick_and_Delivery.msg import NewGoal
 
-DEBUG = True
+DEBUG = False
+CHATTY = True
 
 #Crea la classe robot, che immagazzina dei parametri di controllo e
 #i parametri necessari alla navigazione
 class robot:
 
     Numero_comandi_ricevuti = 0
-    info_ricevute           = False
+    nuove_info_ricevute     = False
     moving                  = False
     target_position         = numpy.empty(2,float)
     old_position            = numpy.empty(2,float)
@@ -28,11 +30,11 @@ class robot:
 #Funzione di callback per il listener del topic \NewGoal
 #Se arriva un nuovo messaggio su tale topic vengono impostati,
 #sulla base del contenuto del messaggio stesso:
-#   -   i campi del messaggio new_goal_msg
+#   -   i campi del messaggio new_goal_msg, che verra' inviato dal ciclo nel main
 #   -   i parametri di controllo del robottino
 def move_to_goal_callback(new_goal):
 
-    if DEBUG: print("Ho ricevuto una nuova destinazione\n")
+    if CHATTY: print("Ho ricevuto una nuova destinazione\n")
     if DEBUG: print("Mi dirigo alla posizione x:{}, y:{}".format(new_goal.x, new_goal.y))
 
     #Imposta i parametri del messaggio new_goal_msg come quelli ricevuti
@@ -52,7 +54,7 @@ def move_to_goal_callback(new_goal):
     #Imposta i parametri di controllo del robottino
     robottino.Numero_comandi_ricevuti+=1
     robottino.moving = True
-    robottino.info_ricevute = True
+    robottino.nuove_info_ricevute = True
 
     #Imposta i parametri di navigazione del robottino
     robottino.target_position[0] = new_goal_msg.pose.position.x
@@ -92,7 +94,7 @@ def timer_check_status(event = None):
         if math.sqrt(math.pow(robottino.current_position[0]-robottino.target_position[0], 2)+ 
                      math.pow(robottino.current_position[1]-robottino.target_position[1], 2)) < 1.5:
 
-            if DEBUG: print("Sono arrivato a destinazione")
+            if CHATTY: print("Sono arrivato a destinazione")
 
             #Pubblica "Arrived" sul relativo topic e imposta il valore 0 al parametro moving del robottino
             publisher_check_status.publish("Arrived")
@@ -132,13 +134,24 @@ if __name__ == '__main__':
     try:
         rospy.init_node('set_goal', anonymous=True)
 
+        if (CHATTY): print("Nodo set_goal inizializzato correttamente\n")
+        if (CHATTY): print("Sono pronto a ricevere informazioni da comunicare al robottino\n")
+
+        #Crea un'istanza della classe PoseStamped, che usiamo come
+        #messaggio per comunicare un obiettivo al robottino
         new_goal_msg = PoseStamped()
+
+        #Inizializza i calcolatori di trasformate interni di ROS
         transformCalculator = tf2_ros.Buffer()
-        liste = tf2_ros.TransformListener(transformCalculator)
+        listener = tf2_ros.TransformListener(transformCalculator)
+
+        #Crea un'istanza della mia classe robot
         robottino = robot()
 
         rate = rospy.Rate(10)
 
+        #Inizializza i publisher, subscriber e timer che permettono allo script di
+        #comunicare con il middleware ROS
         publisher_posizione         = rospy.Publisher(  "/move_base_simple/goal",    PoseStamped,    queue_size=10)
         publisher_check_status      = rospy.Publisher(  "/Arrived",                  String,         queue_size=10)
 
@@ -148,9 +161,11 @@ if __name__ == '__main__':
         timer_arrivato              = rospy.Timer(      rospy.Duration(0.5),                         timer_check_status)
         timer_incastrato            = rospy.Timer(      rospy.Duration(6),                           timer_incastrato_check)
 
+        #Se ci sono nuove informazioni e la connessione e' attiva
+        # le pubblica sul topic /move_base_simple/goal
         while not rospy.is_shutdown():
 
-            if robottino.info_ricevute:
+            if robottino.nuove_info_ricevute:
                 publisher_posizione.publish(new_goal_msg)
             
             rate.sleep()

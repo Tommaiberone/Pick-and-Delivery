@@ -1,7 +1,7 @@
 import socket
 import time
 
-DEBUG = True
+DEBUG = False
 CHATTY = True
 SIZE = 1024
 

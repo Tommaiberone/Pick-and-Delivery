@@ -10,7 +10,7 @@ from Pick_and_Delivery.msg import NewGoal
 
 HOST = "localhost"
 PORT = 12345
-DEBUG = True
+DEBUG = False
 CHATTY = True
 SIZE = 1024
 ARRIVATO_MSG = "Arrived"
@@ -83,20 +83,20 @@ def listen(sock, fifo):
 		#Mette in coda il client
 		fifo.put([client, address])
 
-		#Controlla se il robot è occupato
+		#Controlla se il robot e' occupato
 		robot_occupato_check(client)
 
-		if DEBUG : print("Inserito in coda il client {} con indirizzo {}\n".format(client, address))
+		if CHATTY : print("Inserito in coda il client {} con indirizzo {}\n".format(client, address))
 
 		
-# Funzione che controlla se il robot è occupato. In caso positivo manda un messaggio 
-# al client in cui lo avverte che è stato messo in attesa 
+# Funzione che controlla se il robot e' occupato. In caso positivo manda un messaggio 
+# al client in cui lo avverte che e' stato messo in attesa 
 def robot_occupato_check(client):
 	if robottino.busy:
 		client.send("Ciao! Il robottino al momento e' occupato, ti metto in comunicazione appena possibile\n")
 	
 
-# Funzione che, quando il robottino non è occupato e ci sta qualche client in attesa di essere servito,
+# Funzione che, quando il robottino non e' occupato e ci sta qualche client in attesa di essere servito,
 # starta un thread che prende in carico la richiesta	
 def start_thread(fifo):
 
@@ -156,9 +156,13 @@ def status_callback(msg, client):
 #Annuncia al client che la consegna e' bloccata
 def bloccato(client):
  
-	if CHATTY: print("Il robot e' bloccato\n")
-	client.send("Ci dispiace, purtroppo la consegna e' bloccata!!\n")
+	print("Il robot e' bloccato, prova a riavviare il server\n")
+	client.send("Ci dispiace, purtroppo la consegna e' bloccata, chiudo la connessione!\n")
 
+	try: client.close()
+	except socket.error as e: print ("Caught exception socket.error :", e)
+	exit(0)
+		
 
 #Chiede al client di ripetere qualora questo fornisca 
 # un messaggio che non viene riconosciuto
@@ -185,8 +189,9 @@ def nome_sconosciuto(client):
 
 	try:
 		messaggio_ricevuto = client.recv(SIZE)
-	except:
+	except socket.error as e:
 		print ("Il client si e' disconnesso in modo inaspettato!")
+		if DEBUG: print ("Il codice di errore e' {}!".format(e))
 		client.close()
 		return False
 	
@@ -206,8 +211,9 @@ def client_handle_thread(client, address):
 
 	try:
 		richiesta_ricevuta = client.recv(SIZE)
-	except:
+	except socket.error as e:
 		print ("Il client con indirizzo {} si e' disconnesso in modo inaspettato".format(address))
+		if DEBUG: print ("Il codice di errore e' {}!".format(e))
 		client.close()
 		return False
 
@@ -217,7 +223,7 @@ def client_handle_thread(client, address):
 
 	if DEBUG: print("Ho ricevuto il messaggio {}, \n".format(nome_richiedente))
 
-	#Si accerta che il nome del richiedente sia tra quelli la cui posizione è nota
+	#Si accerta che il nome del richiedente sia tra quelli la cui posizione e' nota
 	while nome_richiedente not in Utenti.keys():
 		nome_richiedente = nome_sconosciuto(client)
 
@@ -227,7 +233,7 @@ def client_handle_thread(client, address):
 	if DEBUG: print("Il nome del richiedente e': {}".format(nome_richiedente))
 	client.send("Ciao {}! Vengo subito a prendere il pacco:\n".format(nome_richiedente))
 
-	#Imposta la destinazione
+	#Imposta la destinazione sulla base della posizione dell'utente nel database
 	posizione_richiedente = (	Utenti[nome_richiedente].posizione_x,
 								Utenti[nome_richiedente].posizione_y,
 								Utenti[nome_richiedente].posizione_theta
@@ -266,9 +272,9 @@ def next_step(client):
 
 		try:
 			messaggio_ricevuto = client.recv(SIZE)
-		except:
+		except socket.error as e:
 			print ("Il client si e' disconnesso in modo inaspettato!")
-			client.close()
+			if DEBUG: print ("Il codice di errore e' {}!".format(e))
 			return False
 
 		robottino.talking = False
@@ -307,13 +313,16 @@ def vai_a(client, nome_destinazione, posizione_destinazione):
 		print("STATS ROBOTTINO:\n\ncoming_to_client: {},\ngoing_to_goal: {},\nbusy: {}\n\n".
 				format(robottino.coming_to_client, robottino.going_to_goal, robottino.busy))
 
+	#Crea il messaggio Nuova_destinazione da passare al publisher
 	Nuova_destinazione = NewGoal	(	posizione_destinazione[0],
 										posizione_destinazione[1],
 										posizione_destinazione[2]
 									)
-					
+
+	#Il messaggio viene pubblicato					
 	NewGoal_Publisher.publish(Nuova_destinazione)
 
+	#Manda un feedback al client
 	if robottino.coming_to_client == True:
 		client.send("Ho impostato correttamente la destinazione, " +
 					"sto arrivando a prendere il pacchetto\n")
@@ -336,18 +345,18 @@ if __name__ == "__main__":
 	#Inizializza la coda con paradigma FIFO
 	fifo = Queue.Queue()
 
-	if (DEBUG): print("Creo la socket del server...")
+	if (CHATTY): print("Creo la socket del server...")
 
 	#Crea la socket del server
 	server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	server_socket.settimeout(3000)
 	server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-	if (DEBUG): print("Faccio il bind della socket alla porta 12345")
+	if (CHATTY): print("Faccio il bind della socket alla porta 12345")
 
 	server_socket.bind((HOST, PORT))
 
-	#Crea il thread il cui scopo è mettere in coda i client in arrivo
+	#Crea il thread il cui scopo e' mettere in coda i client in arrivo
 	threading.Thread(target = listen,args = (server_socket, fifo)).start()
 
 	#Lancia la funzione che preleva i client dalla coda e li mette in comunicazione
