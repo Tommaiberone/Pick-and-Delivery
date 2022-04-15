@@ -12,7 +12,7 @@ from tf2_msgs.msg import TFMessage
 import tf2_ros
 from Pick_and_Delivery.msg import NewGoal
 
-DEBUG = True
+DEBUG = False
 CHATTY = True
 
 #Crea la classe robot, che immagazzina dei parametri di controllo e
@@ -49,7 +49,7 @@ def move_to_goal_callback(new_goal):
     new_goal_msg.pose.orientation.x = 0
     new_goal_msg.pose.orientation.y = 0
     new_goal_msg.pose.orientation.z = 0
-    new_goal_msg.pose.orientation.w = 0
+    new_goal_msg.pose.orientation.w = new_goal.theta
 
     #Imposta i parametri di controllo del robottino
     robottino.Numero_comandi_ricevuti+=1
