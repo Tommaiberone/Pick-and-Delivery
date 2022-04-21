@@ -174,7 +174,8 @@ catkin_install_python(PROGRAMS
 scripts/server_node_FIFO.py
 scripts/server_node_distance_only.py
 scripts/server_node_distance_and_max_time.py
-scripts/server_node_time_waited_only.py
+scripts/server_node_first_time_check.py
+scripts/server_node_priority_queue.py
 scripts/set_goal.py
 DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

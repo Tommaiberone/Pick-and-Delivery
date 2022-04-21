@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from re import I
 import time
 import math 
 import socket
@@ -18,6 +19,11 @@ CHATTY = True
 SIZE = 1024
 ARRIVATO_MSG = "Arrived"
 BLOCCATO_MSG = "Stuck"
+MAX_PRIORITY = 5
+HIGH_PRIORITY = 4
+MEDIUM_PRIORITY = 3
+LOW_PRIORITY = 2
+NO_PRIORITY = 1
 
 #Inizializza la classe Utente, con l'username e i parametri di posizione
 class Utente:
@@ -25,11 +31,13 @@ class Utente:
 	Username				=	""
 	posizione_x				=	0
 	posizione_y				=	0
+	priority 				=	0
 	
-	def __init__(self, Username, x, y):
+	def __init__(self, Username, x, y, priority):
 		self.Username= Username
 		self.posizione_x = x
 		self.posizione_y = y
+		self.priority = priority
 
 #Inizializza la classe robot, che prende come parametri:
 #	-	Dei parametri di controllo
@@ -62,11 +70,11 @@ class robot:
 
 #Inizializzo gli utenti e le relative posizioni
 Utenti =  	{ 	
-				"Tommaso" 	: 	Utente	("Tommaso", 	11.1,	11.4),
-				"Filippo" 	:	Utente	("Filippo", 	19.8,	13.1),
-				"Federico" 	:	Utente	("Federico", 	21.9,	11.4),
-				"Luigi"		:	Utente	("Luigi", 		37.1,	13.1),
-				"Carlo"		:	Utente	("Carlo", 		24.1,	13.5)
+				"Tommaso" 	: 	Utente	("Tommaso", 	11.1,	11.4, MAX_PRIORITY),
+				"Filippo" 	:	Utente	("Filippo", 	19.8,	13.1, HIGH_PRIORITY),
+				"Federico" 	:	Utente	("Federico", 	21.9,	11.4, MEDIUM_PRIORITY),
+				"Luigi"		:	Utente	("Luigi", 		37.1,	13.1, LOW_PRIORITY),
+				"Carlo"		:	Utente	("Carlo", 		24.1,	13.5, NO_PRIORITY)
 			}	
 
 
@@ -95,8 +103,8 @@ def benvenuto(client, address):
 	while nome_richiedente not in Utenti.keys():
 		nome_richiedente = nome_sconosciuto()
 
-	#Mette in coda il client
-	clientList.append([nome_richiedente, client, address, 0])
+	#Mette in coda il client o lo aggiorna se già in coda
+	clientList.append([nome_richiedente, client, address])
 
 	#Controlla se il robot e' occupato
 	robot_occupato_check(client)
@@ -134,27 +142,28 @@ def robot_occupato_check(client):
 
 def retrieve_from_list():
 
-	nome_richiedente, client, address, timeWaited = clientList[0]
+	nome_richiedente, client, address, priority = clientList[0]
 	daRimuovere = 0
 	counter = 0
 	
 	if (len(clientList) != 1):
 
-		if DEBUG: print("Piu' di un client in attesa, scelgo quello piu' vicino al robot\n")
+		if DEBUG: print("Piu' di un client in attesa, scelgo quello con priorità maggiore\n")
 
 		for elem in clientList:
 
-			if (elem[3] > timeWaited):
+			if (elem[3] > priority):
 				nome_richiedente= elem[0]
 				client= elem[1]
 				address= elem[2]
-				timeWaited= elem[3]
+				priority= elem[3]
 				daRimuovere=counter
 
 			counter+=1
 
 	if DEBUG: print("Rimuovo {} dalla lista dei client in attesa\n".format(nome_richiedente))
 
+	#Imposto questo client come già servito e non più in attesa
 	clientList.pop(daRimuovere)
 	updateList()
 
