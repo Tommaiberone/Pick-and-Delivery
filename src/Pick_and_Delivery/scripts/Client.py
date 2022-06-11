@@ -104,7 +104,9 @@ def auto_client_program(nome_mittente, nome_destinatario): #Aggiungere forse pes
     return
 
 # Chiama N volte la funzione auto_client_program() dandogli in input il nome del
-# richiedente e il nome del destinatario del pacchetto
+# richiedente e il nome del destinatario del pacchetto presenti in un dizionario appositamente creato
+#    Il dizionario sarebbe una lista di Mittente - Destinatario che possa sfruttare tutte le funzionalita' dei paradigmi
+
 def clients_spawner():
 
     return
