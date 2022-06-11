@@ -4,6 +4,7 @@ import time
 DEBUG = False
 CHATTY = True
 SIZE = 1024
+AUTO_CHECK = False
 
 Database =  {   "Tommaso"   :   "Password_Tommaso",
                 "T"         :   "T",
@@ -90,10 +91,30 @@ def check_user():
         print("Utente loggato correttamente")
         break
 
-    return username
+    return username    
+
+#una versione modificata di client program che
+# non richiede all'utente di mandare il proprio nome
+
+#   Fa recv a caso per far andare avanti il server finche' non riceve " -> "
+#   Allora manda il nome del mittente
+#   Di nuovo continua a fare recv finche' non riceve " -> "
+#   Allora manda il nome del destinatario
+def auto_client_program(nome_mittente, nome_destinatario): #Aggiungere forse peso pacchetto?s
+    return
+
+# Chiama N volte la funzione auto_client_program() dandogli in input il nome del
+# richiedente e il nome del destinatario del pacchetto
+def clients_spawner():
+
+    return
 
 #Fa effettuare il login all'utente e lo mette in comunicazione con il server
 if __name__ == '__main__':
+
+    if AUTO_CHECK == True:
+        clients_spawner()
+        exit()
 
     #Effettua il check dell'utente
     username = check_user()   
