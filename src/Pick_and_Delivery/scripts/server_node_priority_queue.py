@@ -103,7 +103,7 @@ def benvenuto(client, address):
 	while nome_richiedente not in Utenti.keys():
 		nome_richiedente = nome_sconosciuto()
 
-	#Mette in coda il client o lo aggiorna se già in coda
+	#Mette in coda il client o lo aggiorna se gia' in coda
 	clientList.append([nome_richiedente, client, address])
 
 	#Controlla se il robot e' occupato
@@ -148,7 +148,7 @@ def retrieve_from_list():
 	
 	if (len(clientList) != 1):
 
-		if DEBUG: print("Piu' di un client in attesa, scelgo quello con priorità maggiore\n")
+		if DEBUG: print("Piu' di un client in attesa, scelgo quello con priorita' maggiore\n")
 
 		for elem in clientList:
 
@@ -163,7 +163,7 @@ def retrieve_from_list():
 
 	if DEBUG: print("Rimuovo {} dalla lista dei client in attesa\n".format(nome_richiedente))
 
-	#Imposto questo client come già servito e non più in attesa
+	#Imposto questo client come gia' servito e non piu' in attesa
 	clientList.pop(daRimuovere)
 	updateList()
 
