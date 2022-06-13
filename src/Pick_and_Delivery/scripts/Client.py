@@ -117,7 +117,7 @@ def auto_client_program(nome_mittente, nome_destinatario): #Aggiungere forse pes
 
     i=0
 
-    while messaggio_da_inviare.lower().strip() != 'bye':
+    while True:
         
         #Ricevo un messaggio dalla socket connessa al server
         messaggio_ricevuto = client_socket.recv(SIZE)
@@ -127,25 +127,26 @@ def auto_client_program(nome_mittente, nome_destinatario): #Aggiungere forse pes
         #Altrimenti interrompe l'esecuzione del programma
         if (not messaggio_ricevuto):
             print("La recv si e' bloccata!\n")
-            try: client_socket.close()
-            except socket.error as e: print ("Caught exception socket.error :", e)
             exit(0)
 
         #Accetta un input dall'utente se il server si predispone
         #in modalita' di "ascolto"
-        if messaggio_ricevuto == " -> ":
+        elif messaggio_ricevuto == " -> ":
 
             #La prima volta manda il nome del mittente
             if i == 0:    
                 client_socket.send(nome_mittente)
 
             #La seconda manda il nome del destinatario    
-            else:
+            elif i==1:
                 client_socket.send(nome_destinatario)
+                print("Io {} sono in coda con un pacchetto per {}. Mi disconnetto.\n".format(nome_mittente, nome_destinatario))
+                try: client_socket.close()
+                except socket.error as e:
+                    print ("Caught exception socket.error :", e)
+                break
                 
             i+=1
-
-
 
         #Chiude la connessione con il server se riceve il messaggio di chiusura
         elif messaggio_ricevuto == "Arrivederci e grazie per aver usato il nostro servizio!":
@@ -155,8 +156,6 @@ def auto_client_program(nome_mittente, nome_destinatario): #Aggiungere forse pes
             except socket.error as e:
                 print ("Caught exception socket.error :", e)
             break
-
-        time.sleep(.4)
 
 
 # Chiama N volte la funzione auto_client_program() dandogli in input il nome del
@@ -168,8 +167,8 @@ def clients_spawner():
     clients =   [   
                     ["Tommaso", "Filippo", 5],
                     ["Federico", "Carlo", 5],
-                    ["Luigi", "Carlo", 0],
-                    ["Carlo", "Filippo", 5]
+                    ["Luigi", "Carlo", 2],
+                    ["Filippo", "Tommaso", 5]
                 ]
 
     for tupla in clients:
