@@ -19,12 +19,21 @@ SIZE = 1024
 ARRIVATO_MSG = "Arrived"
 BLOCCATO_MSG = "Stuck"
 
+POSIZIONE_MOTHERBASE_X = 0
+POSIZIONE_MOTHERBASE_Y = 0
+
 #Paradigmi
-DISTANCE 				= 	True
-FIFO 					= 	False
-FIRST_TIME_CHECK 		= 	False
-PRIORITY_QUEUE 			= 	False
-DISTANCE_AND_MAX_TIME 	= 	False
+DISTANCE 					= 	True		#Implementato
+FIFO 						= 	False		#Implementato
+PRIORITY_QUEUE 				= 	False		#Implementato
+DISTANCE_AND_MAX_TIME 		= 	False		#Implementato
+MITT_EQUALS_DEST_CHECK		= 	False		#Implementato
+FULL_PATH_PREDICT			=	False		#Non implementato
+
+#Modificatori dei paradigmi
+###Per attivarne uno deve essere attivo almeno uno dei paradigmi di sopra
+WAIT_POSITION_MOTHERBASE	= 	False		#Implementato
+WAIT_POSITION_PRECALC		= 	False		#Manca la parte in cui viene effettivamente precalcolata la posizione
 
 MAX_PRIORITY = 5
 HIGH_PRIORITY = 4
@@ -57,6 +66,8 @@ class robot:
 
 	going_to_goal 						= 	False
 	coming_to_client					= 	False
+	going_precalc_position				= 	False
+	coming_home							= 	False
 	busy 								= 	False
 	talking								= 	False 	#Flag per evitare che il robottino venga segnalato come bloccato
 													#quando e' in attesa di una risposta del client
@@ -73,6 +84,12 @@ class robot:
 	posizione_destinatario_x			=	0
 	posizione_destinatario_y			=	0
 
+	posizione_motherbase_x				= 	POSIZIONE_MOTHERBASE_X
+	posizione_motherbase_y				= 	POSIZIONE_MOTHERBASE_Y
+	
+	posizione_di_attesa_x 				= 	POSIZIONE_MOTHERBASE_X
+	posizione_di_attesa_y				= 	POSIZIONE_MOTHERBASE_Y
+
 	nome_mittente	 					= 	""
 	client_served 						= 	""
 	address_served 						= 	""
@@ -81,11 +98,11 @@ class robot:
 
 #Inizializzo gli utenti e le relative posizioni
 Utenti =  	{ 	
-				"Tommaso" 	: 	Utente	("Tommaso", 	11.1,	11.4, MAX_PRIORITY),
-				"Filippo" 	:	Utente	("Filippo", 	19.8,	13.1, HIGH_PRIORITY),
-				"Federico" 	:	Utente	("Federico", 	21.9,	11.4, MEDIUM_PRIORITY),
-				"Luigi"		:	Utente	("Luigi", 		37.1,	13.1, LOW_PRIORITY),
-				"Carlo"		:	Utente	("Carlo", 		24.1,	13.5, NO_PRIORITY)
+				"Tommaso" 	: 	Utente	("Tommaso", 	11.1,	11.4, 	MAX_PRIORITY),
+				"Filippo" 	:	Utente	("Filippo", 	19.8,	13.1, 	HIGH_PRIORITY),
+				"Federico" 	:	Utente	("Federico", 	21.9,	11.4, 	MEDIUM_PRIORITY),
+				"Luigi"		:	Utente	("Luigi", 		37.1,	13.1, 	LOW_PRIORITY),
+				"Carlo"		:	Utente	("Carlo", 		24.1,	13.5, 	NO_PRIORITY)
 			}	
 
 
@@ -135,7 +152,7 @@ def benvenuto(client, address):
 		nome_destinatario = nome_sconosciuto()
 
 	#Mette in coda il client
-	clientList.append([nome_richiedente, client, address, nome_destinatario,Utenti[nome_richiedente].priority])
+	clientList.append([nome_richiedente, client, address, nome_destinatario, Utenti[nome_richiedente].priority, 0])
 
 	#Controlla se il robot e' occupato. In caso positivo manda un messaggio 
 	# al client in cui lo avverte che e' stato messo in attesa	
@@ -194,27 +211,8 @@ def retrieve_from_list():
 	if (len(clientList) != 1):
 
 		if DEBUG: print("Piu' di un client in attesa, scelgo quello piu' vicino al robot\n")
-
-		if (DISTANCE):
-			
-			for elem in clientList:
-
-				if checkDistance(elem[0], nome_richiedente):
-					nome_richiedente= elem[0]
-					client= elem[1]
-					address= elem[2]
-					nome_destinatario= elem[3]
-					daRimuovere=counter
-
-			counter+=1
-
-		elif (FIFO):
-			do_nothing()
-
-		elif (DISTANCE_AND_MAX_TIME):
-			do_nothing()
-
-		elif (FIRST_TIME_CHECK):
+		
+		if (FIFO):
 			do_nothing()
 
 		elif (PRIORITY_QUEUE):
@@ -230,6 +228,70 @@ def retrieve_from_list():
 					priority= elem[3]
 					daRimuovere=counter
 
+				counter+=1
+
+		elif (DISTANCE_AND_MAX_TIME):
+
+			if DEBUG: print("Piu' di un client in attesa, scelgo quello piu' vicino al robot\n")
+
+			done = False
+
+			for elem in clientList:
+				
+				#Se c'e' un client in attesa da almeno tre "turni" allora il robot sceglie di servire
+				#lui a prescindere dalla distanza
+				if done == False and elem[5] > 2:
+					nome_richiedente= elem[0]
+					client = elem[1]
+					address = elem[2]
+					daRimuovere = counter
+					done = True
+				
+				if done == False and checkDistance(elem[0], nome_richiedente):
+					nome_richiedente= elem[0]
+					client= elem[1]
+					address= elem[2]
+					daRimuovere=counter
+				
+				elem[5]+=1
+				counter+=1
+
+				done = False
+
+		elif (DISTANCE):
+			
+			for elem in clientList:
+
+				if checkDistance(elem[0], nome_richiedente):
+					nome_richiedente= elem[0]
+					client= elem[1]
+					address= elem[2]
+					nome_destinatario= elem[3]
+					daRimuovere=counter
+
+			counter+=1
+	
+		elif (MITT_EQUALS_DEST_CHECK):
+
+			for elem in clientList:
+				
+				#Se c'e' un client in attesa il cui destinatario corrisponde con il mittente
+				#di un altro client in attesa serve direttamente lui
+				for elem2 in clientList:
+
+					if elem[3] == elem2[0]:
+						nome_richiedente= elem[0]
+						client = elem[1]
+						address = elem[2]
+						daRimuovere = counter
+						break
+				
+				if checkDistance(elem[0], nome_richiedente):
+					nome_richiedente= elem[0]
+					client= elem[1]
+					address= elem[2]
+					daRimuovere=counter
+				
 				counter+=1
 
 	if DEBUG: print("Rimuovo {} dalla lista dei client in attesa\n".format(nome_richiedente))
@@ -255,7 +317,10 @@ def start_thread():
 
 	while True:
 		
-		if len(clientList) != 0 and not robottino.busy:
+		if robottino.busy:
+			continue
+
+		if len(clientList) != 0:
 
 			retrieve_from_list()
 
@@ -266,6 +331,17 @@ def start_thread():
 			if DEBUG: print("Servo la richiesta di {}, client #{}, con indirizzo {}\n".
 						format(robottino.nome_mittente, robottino.client_served, robottino.address_served))
 			threading.Thread(target = client_handle_thread).start()
+		
+		elif WAIT_POSITION_MOTHERBASE:
+			robottino.coming_home = True
+			vai_a()
+
+		elif WAIT_POSITION_PRECALC:
+			robottino.going_precalc_position = True
+			vai_a()
+
+def go_home(posizione_x, posizione_y):
+	do_nothing()
 
 #Funzione che viene chiamata quando il robottino termina la missione di un client
 def arrivederci():
@@ -274,9 +350,11 @@ def arrivederci():
 	try:robottino.client_served.send("Fatto! Ho portato con successo il tuo pacco a destinazione!\n")
 	except: do_nothing()
 	time.sleep(.1)
+
 	try:robottino.client_served.send("Arrivederci e grazie per aver usato il nostro servizio!")
 	except: do_nothing()
 	time.sleep(.1)
+
 	robottino.client_served.close()
 
 	#Disconnette il listener dal topic, altrimenti si bugga con il prossimo client
@@ -362,6 +440,9 @@ def nome_sconosciuto():
 def client_handle_thread():
 
 	robottino.busy = True 
+	robottino.coming_home = False
+	robottino.going_precalc_position = False
+	robottino.coming_to_client = True
 
 	#Ogni thread si iscrive alla topic /Arrived
 	if (robottino.Status_checker != ""):
@@ -378,8 +459,6 @@ def client_handle_thread():
 	if DEBUG: print("La posizione del richiedente e': x={}, y={}\n".
 				format(robottino.posizione_mittente_x, robottino.posizione_mittente_y))
 
-	robottino.coming_to_client = True
-
 	#Invoca la funzione che determina l'effettivo movimento del robot
 	vai_a ()
 
@@ -390,10 +469,14 @@ def next_step():
 	#if DEBUG: 	print("nome client: {}, client #{}, address{}\n".
 	#			format(robottino.nome_destinatario, robottino.client_served, robottino.address_served))
 
+
+	if robottino.coming_home: robottino.coming_home = False
+	if robottino.going_precalc_position: robottino.going_precalc_position = False
+
 	#Se il robottino stava consegnando il pacco vuol dire che ora l'ha consegnato
 	#ed e' pronto per una nuova missione
 	#Quindi saluta il client
-	if robottino.going_to_goal == True:
+	elif robottino.going_to_goal == True:
 		arrivederci()
 
 	#Se il robottino invece stava venendo a prendere il pacco vuol dire che ora
@@ -434,32 +517,44 @@ def vai_a():
 				format(robottino.coming_to_client, robottino.going_to_goal, robottino.busy))
 
 	#Crea il messaggio Nuova_destinazione da passare al publisher
-	if robottino.coming_to_client == True:
+	if robottino.coming_to_client:
 		Nuova_destinazione = NewGoal	(	robottino.posizione_mittente_x,
 											robottino.posizione_mittente_y,
 											0.0
 										)
+		
+		#Manda un feedback al client
+		try: robottino.client_served.send("Ho impostato correttamente la destinazione, " +
+					"sto arrivando a prendere il pacchetto\n")
+		except: do_nothing()
+		time.sleep(.1)
 
-	else:
+	elif robottino.going_to_goal:
 		Nuova_destinazione = NewGoal	(	robottino.posizione_destinatario_x,
 											robottino.posizione_destinatario_y,
+											0.0
+										)
+		#Manda un feedback al client
+		try: robottino.client_served.send("Ho impostato correttamente la destinazione, " +
+					"porto subito il tuo pacchetto\n")
+		except: do_nothing()
+		time.sleep(.1)
+	
+	elif robottino.coming_home:
+		Nuova_destinazione = NewGoal	(	robottino.posizione_motherbase_x,
+											robottino.posizione_motherbase_y,
+											0.0
+										)
+	
+	elif robottino.going_precalc_position:
+		Nuova_destinazione = NewGoal	(	robottino.posizione_di_attesa_x,
+											robottino.posizione_di_attesa_y,
 											0.0
 										)
 
 	#Il messaggio viene pubblicato					
 	NewGoal_Publisher.publish(Nuova_destinazione)
-
-	#Manda un feedback al client
-	if robottino.coming_to_client == True:
-		try: robottino.client_served.send("Ho impostato correttamente la destinazione, " +
-					"sto arrivando a prendere il pacchetto\n")
-		except: do_nothing()
-		time.sleep(.1)
-	elif robottino.going_to_goal == True:
-		try: robottino.client_served.send("Ho impostato correttamente la destinazione, " +
-					"porto subito il tuo pacchetto\n")
-		except: do_nothing()
-		time.sleep(.1)
+		
 
 #Funzione di callback del listener sul topic /tf
 #Si occupa di aggiornare i parametri di navigazione del robottino
