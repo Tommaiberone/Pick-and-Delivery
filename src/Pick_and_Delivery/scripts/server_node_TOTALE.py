@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from operator import truediv
 import time
 import math 
 import socket
@@ -167,6 +168,7 @@ def benvenuto(client, address):
 		print("Lista dei client in attesa:\n")
 		for elem in clientList:
 			print("{} con un pacco per {}\n".format(elem[0], elem[3]))
+
 	               
 #Mette il thread principale in ascolto su una porta. 
 #Ogni client che si connette viene messo in coda
@@ -196,6 +198,25 @@ def checkDistance(nome1, nome2):
 						) 
 		
 		):
+		return True
+	return False
+
+def checkFullDistance(mittente_nuovo, mittente_vecchio, destinatario_nuovo, destinatario_vecchio):
+	if	(math.sqrt	(	
+				math.pow(robottino.posizione_x - Utenti[mittente_nuovo].posizione_x, 2)+ 
+				math.pow(robottino.posizione_y - Utenti[mittente_nuovo].posizione_y, 2)
+		) + math.sqrt	(	
+				math.pow(Utenti[mittente_nuovo].posizione_x, Utenti[destinatario_nuovo].posizione_x, 2)+ 
+				math.pow(Utenti[mittente_nuovo].posizione_y, Utenti[destinatario_nuovo].posizione_y, 2)
+		) 
+		<
+		math.sqrt	(	
+				math.pow(robottino.posizione_x - Utenti[mittente_vecchio].posizione_x, 2)+ 
+				math.pow(robottino.posizione_y - Utenti[mittente_vecchio].posizione_y, 2)
+		) + math.sqrt	(	
+				math.pow(Utenti[mittente_vecchio].posizione_x, Utenti[destinatario_vecchio].posizione_x, 2)+ 
+				math.pow(Utenti[mittente_vecchio].posizione_y, Utenti[destinatario_vecchio].posizione_y, 2)
+		)):
 		return True
 	return False
 
@@ -293,6 +314,18 @@ def retrieve_from_list():
 					daRimuovere=counter
 				
 				counter+=1
+			
+		elif FULL_PATH_PREDICT:
+			for elem in clientList:
+
+				if checkFullDistance(elem[0], nome_richiedente, elem[3], nome_destinatario):
+					nome_richiedente= elem[0]
+					client= elem[1]
+					address= elem[2]
+					nome_destinatario= elem[3]
+					daRimuovere=counter
+
+			counter+=1
 
 	if DEBUG: print("Rimuovo {} dalla lista dei client in attesa\n".format(nome_richiedente))
 
