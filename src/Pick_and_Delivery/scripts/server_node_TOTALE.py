@@ -16,20 +16,22 @@ HOST = "localhost"
 PORT = 12345
 DEBUG = True
 CHATTY = True
+MEASURE = True
 SIZE = 1024
 ARRIVATO_MSG = "Arrived"
 BLOCCATO_MSG = "Stuck"
+NUM_CLIENTS = 4
 
 POSIZIONE_MOTHERBASE_X = 0
 POSIZIONE_MOTHERBASE_Y = 0
 
 #Paradigmi
-DISTANCE 					= 	True		#Implementato
 FIFO 						= 	False		#Implementato
 PRIORITY_QUEUE 				= 	False		#Implementato
 DISTANCE_AND_MAX_TIME 		= 	False		#Implementato
+DISTANCE 					= 	True		#Implementato
 MITT_EQUALS_DEST_CHECK		= 	False		#Implementato
-FULL_PATH_PREDICT			=	False		#Non implementato
+FULL_PATH_PREDICT			=	False		#Implementato
 
 #Modificatori dei paradigmi
 ###Per attivarne uno deve essere attivo almeno uno dei paradigmi di sopra
@@ -95,6 +97,7 @@ class robot:
 	client_served 						= 	""
 	address_served 						= 	""
 	nome_destinatario					= 	""
+	tempo_presa_in_carico				= 	0
 
 
 #Inizializzo gli utenti e le relative posizioni
@@ -153,7 +156,7 @@ def benvenuto(client, address):
 		nome_destinatario = nome_sconosciuto()
 
 	#Mette in coda il client
-	clientList.append([nome_richiedente, client, address, nome_destinatario, Utenti[nome_richiedente].priority, 0])
+	clientList.append([nome_richiedente, client, address, nome_destinatario, Utenti[nome_richiedente].priority, 0, time.time()])
 
 	#Controlla se il robot e' occupato. In caso positivo manda un messaggio 
 	# al client in cui lo avverte che e' stato messo in attesa	
@@ -329,6 +332,11 @@ def retrieve_from_list():
 
 	if DEBUG: print("Rimuovo {} dalla lista dei client in attesa\n".format(nome_richiedente))
 
+	tempo_presa_in_carico = time.time()
+
+	if MEASURE: print("Il client {} è stato preso in carico dopo {} secondi\n"
+					.format(nome_richiedente, time.time() - clientList[daRimuovere][6]))
+
 	clientList.pop(daRimuovere)
 
 	if DEBUG:
@@ -340,6 +348,7 @@ def retrieve_from_list():
 	robottino.nome_destinatario = nome_destinatario
 	robottino.client_served = client
 	robottino.address_served = address
+	robottino.tempo_presa_in_carico = tempo_presa_in_carico
 
 def do_nothing():
 	return	
@@ -395,11 +404,20 @@ def arrivederci():
 	robottino.Status_checker = ""	
 
 	if CHATTY:
-		print("Portato correttametne il pacco di {} a {}\n".format(robottino.nome_mittente, robottino.nome_destinatario)) 
+		print("Portato correttamente il pacco di {} a {}\n".format(robottino.nome_mittente, robottino.nome_destinatario)) 
 	if DEBUG: 
 		print("STATS ROBOTTINO:\ncoming_to_client: {},\ngoing_to_goal: {},\nbusy: {}\n".
 				format(robottino.coming_to_client, robottino.going_to_goal, robottino.busy))
+	if MEASURE: print("Il client {} è stato servito dopo {} secondi da quando è stato preso in carico\n".
+				format(robottino.nome_mittente, time.time() - robottino.tempo_presa_in_carico))
 	
+	supercounter += 1
+
+	if supercounter == NUM_CLIENTS:
+		if MEASURE: print("Il tempo totale per servire tutti i clients è stato di {} secondi\n".
+			format(time.time() - tempo_inizializzazione))
+
+
 	#Resetta i parametri di controllo
 	robottino.coming_to_client = False
 	robottino.going_to_goal = False
@@ -625,6 +643,10 @@ if __name__ == "__main__":
 
 	#Inizializza la lista
 	clientList = list()
+
+	#Parametri per il calcolo del tempo
+	tempo_inizializzazione = time.time()
+	supercounter = 0
 
 	if (CHATTY): print("Creo la socket del server...")
 
