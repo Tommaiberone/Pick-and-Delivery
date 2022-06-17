@@ -167,8 +167,11 @@ def clients_spawner():
     clients =   [   
                     ["Tommaso", "Filippo", 5],
                     ["Federico", "Carlo", 5],
-                    ["Luigi", "Carlo", 2],
-                    ["Filippo", "Tommaso", 5]
+                    ["Luigi", "Carlo", 22],
+                    ["Filippo", "Tommaso", 5],
+                    ["Carlo", "Federico", 2],
+                    ["Tommaso", "Luigi", 1],
+                    ["Filippo", "Federico", 0]
                 ]
 
     for tupla in clients:

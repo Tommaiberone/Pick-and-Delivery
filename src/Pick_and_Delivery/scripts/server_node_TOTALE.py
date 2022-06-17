@@ -2,6 +2,7 @@
 
 from operator import truediv
 import time
+import sys
 import math 
 import socket
 import threading
@@ -12,24 +13,25 @@ from geometry_msgs.msg import TransformStamped
 import tf2_ros
 from Pick_and_Delivery.msg import NewGoal
 
-HOST = "localhost"
-PORT = 12345
-DEBUG = True
-CHATTY = True
-MEASURE = True
-SIZE = 1024
-ARRIVATO_MSG = "Arrived"
-BLOCCATO_MSG = "Stuck"
-NUM_CLIENTS = 4
+HOST 				= 	"localhost"
+PORT 				= 	12345
+SUPERDEBUG 			= 	False
+DEBUG 				= 	False
+CHATTY 				= 	False
+MEASURE 			= 	True
+SIZE 				= 	1024
+ARRIVATO_MSG 		= 	"Arrived"
+BLOCCATO_MSG 		= 	"Stuck"
+NUM_CLIENTS 		= 	7
 
 POSIZIONE_MOTHERBASE_X = 0
 POSIZIONE_MOTHERBASE_Y = 0
 
 #Paradigmi
 FIFO 						= 	False		#Implementato
-PRIORITY_QUEUE 				= 	False		#Implementato
+PRIORITY_QUEUE 				= 	True		#Implementato
 DISTANCE_AND_MAX_TIME 		= 	False		#Implementato
-DISTANCE 					= 	True		#Implementato
+DISTANCE 					= 	False		#Implementato
 MITT_EQUALS_DEST_CHECK		= 	False		#Implementato
 FULL_PATH_PREDICT			=	False		#Implementato
 
@@ -98,6 +100,8 @@ class robot:
 	address_served 						= 	""
 	nome_destinatario					= 	""
 	tempo_presa_in_carico				= 	0
+	supercounter						= 	0
+	tempo_inizializzazione				= 	0
 
 
 #Inizializzo gli utenti e le relative posizioni
@@ -127,7 +131,7 @@ def benvenuto(client, address):
 
 	nome_richiedente = richiesta_ricevuta.strip()
 
-	if DEBUG: print("Ho ricevuto il messaggio {}, \n".format(nome_richiedente))
+	if SUPERDEBUG: print("Ho ricevuto il messaggio {}, \n".format(nome_richiedente))
 
 	#Si accerta che il nome del richiedente sia tra quelli la cui posizione e' nota
 	while nome_richiedente not in Utenti.keys():
@@ -149,7 +153,7 @@ def benvenuto(client, address):
 
 	nome_destinatario = richiesta_ricevuta.strip()
 
-	if DEBUG: print("Ho ricevuto il messaggio {}, \n".format(nome_destinatario))
+	if SUPERDEBUG: print("Ho ricevuto il messaggio {}, \n".format(nome_destinatario))
 
 	#Si accerta che il nome del richiedente sia tra quelli la cui posizione e' nota
 	while nome_destinatario not in Utenti.keys():
@@ -170,7 +174,7 @@ def benvenuto(client, address):
 	if DEBUG:
 		print("Lista dei client in attesa:\n")
 		for elem in clientList:
-			print("{} con un pacco per {}\n".format(elem[0], elem[3]))
+			print("{} con un pacco per {}".format(elem[0], elem[3]))
 
 	               
 #Mette il thread principale in ascolto su una porta. 
@@ -228,20 +232,22 @@ def retrieve_from_list():
 	if (len(clientList) == 0):
 		return
 
-	nome_richiedente, client, address, nome_destinatario, priority = clientList[0]
+	if DEBUG:
+		for elem in clientList:
+			print("\n\n{} con un pacco per {}\n\n".format(elem[0], elem[3]))
+
+	nome_richiedente, client, address, nome_destinatario, priority, inutile1, inutile2 = clientList[0]
 	daRimuovere = 0
 	counter = 0
 	
 	if (len(clientList) != 1):
-
-		if DEBUG: print("Piu' di un client in attesa, scelgo quello piu' vicino al robot\n")
 		
 		if (FIFO):
 			do_nothing()
 
 		elif (PRIORITY_QUEUE):
 			
-			if DEBUG: print("Piu' di un client in attesa, scelgo quello con priorita' maggiore\n")
+			if CHATTY: print("Piu' di un client in attesa, scelgo quello con priorita' maggiore\n")
 
 			for elem in clientList:
 
@@ -256,7 +262,7 @@ def retrieve_from_list():
 
 		elif (DISTANCE_AND_MAX_TIME):
 
-			if DEBUG: print("Piu' di un client in attesa, scelgo quello piu' vicino al robot\n")
+			if CHATTY: print("Piu' di un client in attesa, scelgo quello piu' vicino al robot o quello non servito da troppo tempo\n")
 
 			done = False
 
@@ -293,7 +299,7 @@ def retrieve_from_list():
 					nome_destinatario= elem[3]
 					daRimuovere=counter
 
-			counter+=1
+				counter+=1
 	
 		elif (MITT_EQUALS_DEST_CHECK):
 
@@ -334,15 +340,16 @@ def retrieve_from_list():
 
 	tempo_presa_in_carico = time.time()
 
-	if MEASURE: print("Il client {} è stato preso in carico dopo {} secondi\n"
+	if MEASURE: print("Il client {} e' stato preso in carico dopo {} secondi da quando ha fatto richiesta\n"
 					.format(nome_richiedente, time.time() - clientList[daRimuovere][6]))
 
 	clientList.pop(daRimuovere)
+	orderList.append(nome_richiedente)
 
 	if DEBUG:
-		print("Lista dei client in attesa:\n")
+		print("Lista dei client in attesa:")
 		for elem in clientList:
-			print("{} con un pacco per {}\n".format(elem[0], elem[3]))
+			print("{} con un pacco per {}".format(elem[0], elem[3]))
 
 	robottino.nome_mittente = nome_richiedente
 	robottino.nome_destinatario = nome_destinatario
@@ -405,17 +412,26 @@ def arrivederci():
 
 	if CHATTY:
 		print("Portato correttamente il pacco di {} a {}\n".format(robottino.nome_mittente, robottino.nome_destinatario)) 
-	if DEBUG: 
+	if SUPERDEBUG: 
 		print("STATS ROBOTTINO:\ncoming_to_client: {},\ngoing_to_goal: {},\nbusy: {}\n".
 				format(robottino.coming_to_client, robottino.going_to_goal, robottino.busy))
-	if MEASURE: print("Il client {} è stato servito dopo {} secondi da quando è stato preso in carico\n".
+	if MEASURE: print("Il client {} e' stato servito dopo {} secondi da quando e' stato preso in carico\n".
 				format(robottino.nome_mittente, time.time() - robottino.tempo_presa_in_carico))
 	
-	supercounter += 1
+	robottino.supercounter += 1
 
-	if supercounter == NUM_CLIENTS:
-		if MEASURE: print("Il tempo totale per servire tutti i clients è stato di {} secondi\n".
-			format(time.time() - tempo_inizializzazione))
+	if robottino.supercounter == NUM_CLIENTS:
+		if MEASURE: 
+			print("Il tempo di inizializzaione e' di {} secondi".format(robottino.tempo_inizializzazione))
+			print("Il corrente e' di {} secondi\n".format(time.time()))
+			print("Il tempo totale per servire tutti i clients e' stato di {} secondi\n".
+					format(time.time() - robottino.tempo_inizializzazione))
+			print("Ho servito i clients in quest'ordine:")
+			for elem in orderList:
+				print(elem)
+
+		sys.stdout.close()
+
 
 
 	#Resetta i parametri di controllo
@@ -428,7 +444,7 @@ def arrivederci():
 #si comporta in modo diverso a seconda del messaggio che ha ricevuto
 def status_callback(msg):
 
-	if DEBUG: print("Ho ricevuto il messaggio {} dal topic \Arrived".format(msg))
+	if SUPERDEBUG: print("Ho ricevuto il messaggio {} dal topic \Arrived".format(msg))
 
 	#Se il messaggio ricevuto indica che il robottino e' giunto a destinazione
 	#il robottino passa allo step successivo
@@ -501,13 +517,13 @@ def client_handle_thread():
  
 	robottino.Status_checker = 	rospy.Subscriber("/Arrived", String, status_callback)
 
-	if DEBUG: print("Il nome del richiedente e': {}".format(robottino.nome_mittente))
+	if SUPERDEBUG: print("Il nome del richiedente e': {}".format(robottino.nome_mittente))
 	try:
 		robottino.client_served.send("Ciao {}! Vengo subito a prendere il pacco:\n".format(robottino.nome_mittente))
 	except: do_nothing()
 	time.sleep(.1)
 
-	if DEBUG: print("La posizione del richiedente e': x={}, y={}\n".
+	if SUPERDEBUG: print("La posizione del richiedente e': x={}, y={}\n".
 				format(robottino.posizione_mittente_x, robottino.posizione_mittente_y))
 
 	#Invoca la funzione che determina l'effettivo movimento del robot
@@ -542,7 +558,7 @@ def next_step():
 		robottino.posizione_destinatario_x 		= 	Utenti[robottino.nome_destinatario].posizione_x
 		robottino.posizione_destinatario_y 		= 	Utenti[robottino.nome_destinatario].posizione_y
 
-		if DEBUG: print("La posizione del destinatario e': x={}, y={}\n".
+		if SUPERDEBUG: print("La posizione del destinatario e': x={}, y={}\n".
 			format(robottino.posizione_destinatario_x, robottino.posizione_destinatario_y))
 
 		try: robottino.client_served.send("Ok! Porto subito il tuo pacco a {}\n".format(robottino.nome_destinatario))
@@ -563,7 +579,7 @@ def vai_a():
 		print("Porto il pacchetto di {} a {}\n".
 				format(robottino.nome_mittente, robottino.nome_destinatario))
 
-	if DEBUG: 
+	if SUPERDEBUG: 
 		print("STATS ROBOTTINO:\n\ncoming_to_client: {},\ngoing_to_goal: {},\nbusy: {}\n\n".
 				format(robottino.coming_to_client, robottino.going_to_goal, robottino.busy))
 
@@ -644,9 +660,27 @@ if __name__ == "__main__":
 	#Inizializza la lista
 	clientList = list()
 
+	#Inizializza la lista con l'ordine degli utenti serviti
+	orderList = list()
+
+	#Rendirizza i print verso un file
+	if DISTANCE:
+		file_path = 'DISTANCE.txt'
+	elif FIFO:
+		file_path = 'FIFO.txt'
+	elif DISTANCE_AND_MAX_TIME:
+		file_path = 'DISTANCE_AND_MAX_TIME.txt'
+	elif FULL_PATH_PREDICT:
+		file_path = 'FULL_PATH_PREDICT.txt'
+	elif PRIORITY_QUEUE:
+		file_path = 'PRIORITY_QUEUE.txt'
+	elif MITT_EQUALS_DEST_CHECK:
+		file_path = 'MITT_EQUALS_DEST_CHECK.txt'
+	sys.stdout = open(file_path, "w")
+
 	#Parametri per il calcolo del tempo
-	tempo_inizializzazione = time.time()
-	supercounter = 0
+	robottino.tempo_inizializzazione = time.time()
+	robottino.supercounter = 0
 
 	if (CHATTY): print("Creo la socket del server...")
 
