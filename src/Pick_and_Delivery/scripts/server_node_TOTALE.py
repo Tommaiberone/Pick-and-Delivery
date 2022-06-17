@@ -29,11 +29,11 @@ POSIZIONE_MOTHERBASE_Y = 0
 
 #Paradigmi
 FIFO 						= 	False		#Implementato
-PRIORITY_QUEUE 				= 	True		#Implementato
+PRIORITY_QUEUE 				= 	False		#Implementato
 DISTANCE_AND_MAX_TIME 		= 	False		#Implementato
 DISTANCE 					= 	False		#Implementato
 MITT_EQUALS_DEST_CHECK		= 	False		#Implementato
-FULL_PATH_PREDICT			=	False		#Implementato
+FULL_PATH_PREDICT			=	True		#Implementato
 
 #Modificatori dei paradigmi
 ###Per attivarne uno deve essere attivo almeno uno dei paradigmi di sopra
@@ -213,16 +213,16 @@ def checkFullDistance(mittente_nuovo, mittente_vecchio, destinatario_nuovo, dest
 				math.pow(robottino.posizione_x - Utenti[mittente_nuovo].posizione_x, 2)+ 
 				math.pow(robottino.posizione_y - Utenti[mittente_nuovo].posizione_y, 2)
 		) + math.sqrt	(	
-				math.pow(Utenti[mittente_nuovo].posizione_x, Utenti[destinatario_nuovo].posizione_x, 2)+ 
-				math.pow(Utenti[mittente_nuovo].posizione_y, Utenti[destinatario_nuovo].posizione_y, 2)
+				math.pow(Utenti[mittente_nuovo].posizione_x- Utenti[destinatario_nuovo].posizione_x, 2)+ 
+				math.pow(Utenti[mittente_nuovo].posizione_y- Utenti[destinatario_nuovo].posizione_y, 2)
 		) 
 		<
 		math.sqrt	(	
 				math.pow(robottino.posizione_x - Utenti[mittente_vecchio].posizione_x, 2)+ 
 				math.pow(robottino.posizione_y - Utenti[mittente_vecchio].posizione_y, 2)
 		) + math.sqrt	(	
-				math.pow(Utenti[mittente_vecchio].posizione_x, Utenti[destinatario_vecchio].posizione_x, 2)+ 
-				math.pow(Utenti[mittente_vecchio].posizione_y, Utenti[destinatario_vecchio].posizione_y, 2)
+				math.pow(Utenti[mittente_vecchio].posizione_x- Utenti[destinatario_vecchio].posizione_x, 2)+ 
+				math.pow(Utenti[mittente_vecchio].posizione_y- Utenti[destinatario_vecchio].posizione_y, 2)
 		)):
 		return True
 	return False
@@ -251,7 +251,7 @@ def retrieve_from_list():
 
 			for elem in clientList:
 
-				if (elem[3] > priority):
+				if (elem[4] > priority):
 					nome_richiedente= elem[0]
 					client= elem[1]
 					address= elem[2]
@@ -305,6 +305,17 @@ def retrieve_from_list():
 
 			for elem in clientList:
 				
+				if checkDistance(elem[0], nome_richiedente):
+					nome_richiedente= elem[0]
+					client= elem[1]
+					address= elem[2]
+					daRimuovere=counter
+				counter+=1
+
+			counter = 0
+
+			for elem in clientList:
+
 				#Se c'e' un client in attesa il cui destinatario corrisponde con il mittente
 				#di un altro client in attesa serve direttamente lui
 				for elem2 in clientList:
@@ -316,15 +327,10 @@ def retrieve_from_list():
 						daRimuovere = counter
 						break
 				
-				if checkDistance(elem[0], nome_richiedente):
-					nome_richiedente= elem[0]
-					client= elem[1]
-					address= elem[2]
-					daRimuovere=counter
-				
 				counter+=1
 			
 		elif FULL_PATH_PREDICT:
+			
 			for elem in clientList:
 
 				if checkFullDistance(elem[0], nome_richiedente, elem[3], nome_destinatario):
@@ -334,7 +340,7 @@ def retrieve_from_list():
 					nome_destinatario= elem[3]
 					daRimuovere=counter
 
-			counter+=1
+				counter+=1
 
 	if DEBUG: print("Rimuovo {} dalla lista dei client in attesa\n".format(nome_richiedente))
 
@@ -431,8 +437,6 @@ def arrivederci():
 				print(elem)
 
 		sys.stdout.close()
-
-
 
 	#Resetta i parametri di controllo
 	robottino.coming_to_client = False
