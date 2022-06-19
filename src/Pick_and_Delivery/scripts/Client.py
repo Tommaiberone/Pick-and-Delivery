@@ -165,13 +165,34 @@ def auto_client_program(nome_mittente, nome_destinatario): #Aggiungere forse pes
 def clients_spawner():
 
     clients =   [   
-                    ["Tommaso", "Filippo", 5],
-                    ["Federico", "Carlo", 5],
-                    ["Luigi", "Carlo", 22],
-                    ["Filippo", "Tommaso", 5],
-                    ["Carlo", "Federico", 2],
-                    ["Tommaso", "Luigi", 1],
-                    ["Filippo", "Federico", 0]
+                    ["Tommaso"  ,   "Filippo"   , 20],
+                    ["Federico" ,   "Carlo"     , 5],
+                    ["Luigi"    ,   "Carlo"     , 22],
+                    ["Filippo"  ,   "Tommaso"   , 5],
+                    ["Carlo"    ,   "Federico"  , 15],
+                    ["Tommaso"  ,   "Luigi"     , 27],
+                    ["Filippo"  ,   "Federico"  , 52],
+                    ["Peppe"    ,   "Bianca"    , 1],
+                    ["Francesco",   "Massimo"   , 3],
+                    ["Federico" ,   "Luigi"     , 34],
+                    ["Bianca"   ,   "Federico"  , 15],
+                    ["Pietro"   ,   "Carlo"     , 23],
+                    ["Tommaso"  ,   "Bianca"    , 2],
+                    ["Filippo"  ,   "Carlo"     , 51],
+                    ["Federico" ,   "Peppe"     , 23],
+                    ["Massimo"  ,   "Francesco" , 14],
+                    ["Francesco",   "Bianca"    , 2],
+                    ["Tommaso"  ,   "Federico"  , 42],
+                    ["Filippo"  ,   "Tommaso"   , 13],
+                    ["Peppe"    ,   "Bianca"    , 22],
+                    ["Federico" ,   "Bianca"    , 28],
+                    ["Carlo"    ,   "Luigi"     , 2],
+                    ["Filippo"  ,   "Peppe"     , 52],
+                    ["Peppe"    ,   "Carlo"     , 9],
+                    ["Luigi"    ,   "Tommaso"   , 18],
+                    ["Bianca"   ,   "Carlo"     , 12],
+                    ["Luigi"    ,   "Massimo"   , 5],
+                    ["Peppe"    ,   "Federico"  , 8]
                 ]
 
     for tupla in clients:

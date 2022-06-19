@@ -1,0 +1,152 @@
+Il client Tommaso e' stato preso in carico dopo 4.48226928711e-05 secondi da quando ha fatto richiesta
+
+Il client Tommaso e' stato servito dopo 89.546104908 secondi da quando e' stato preso in carico
+
+Il client Tommaso e' stato preso in carico dopo 22.4796049595 secondi da quando ha fatto richiesta
+
+Il client Tommaso e' stato servito dopo 43.5105359554 secondi da quando e' stato preso in carico
+
+Il client Filippo e' stato preso in carico dopo 38.963436842 secondi da quando ha fatto richiesta
+
+Il client Filippo e' stato servito dopo 17.9857561588 secondi da quando e' stato preso in carico
+
+Il client Federico e' stato preso in carico dopo 0.895747900009 secondi da quando ha fatto richiesta
+
+Il client Federico e' stato servito dopo 10.9674150944 secondi da quando e' stato preso in carico
+
+Il client Carlo e' stato preso in carico dopo 109.95629096 secondi da quando ha fatto richiesta
+
+Il client Carlo e' stato servito dopo 1.04508709908 secondi da quando e' stato preso in carico
+
+Il client Federico e' stato preso in carico dopo 143.036044836 secondi da quando ha fatto richiesta
+
+Il client Federico e' stato servito dopo 9.47463107109 secondi da quando e' stato preso in carico
+
+Il client Filippo e' stato preso in carico dopo 125.475733995 secondi da quando ha fatto richiesta
+
+Il client Filippo e' stato servito dopo 18.5270659924 secondi da quando e' stato preso in carico
+
+Il client Peppe e' stato preso in carico dopo 44.9145629406 secondi da quando ha fatto richiesta
+
+Il client Peppe e' stato servito dopo 112.000596046 secondi da quando e' stato preso in carico
+
+Il client Massimo e' stato preso in carico dopo 4.7681748867 secondi da quando ha fatto richiesta
+
+Il client Massimo e' stato servito dopo 72.9923820496 secondi da quando e' stato preso in carico
+
+Il client Peppe e' stato preso in carico dopo 6.69326901436 secondi da quando ha fatto richiesta
+
+Il client Peppe e' stato servito dopo 113.493570805 secondi da quando e' stato preso in carico
+
+Il client Luigi e' stato preso in carico dopo 7.07728290558 secondi da quando ha fatto richiesta
+
+Il client Luigi e' stato servito dopo 51.9901020527 secondi da quando e' stato preso in carico
+
+Il client Peppe e' stato preso in carico dopo 24.0317480564 secondi da quando ha fatto richiesta
+
+Il client Peppe e' stato servito dopo 111.491187096 secondi da quando e' stato preso in carico
+
+Il client Bianca e' stato preso in carico dopo 152.540709019 secondi da quando ha fatto richiesta
+
+Il client Bianca e' stato servito dopo 72.9989528656 secondi da quando e' stato preso in carico
+
+Il client Peppe e' stato preso in carico dopo 252.561765194 secondi da quando ha fatto richiesta
+
+Il client Peppe e' stato servito dopo 112.514546156 secondi da quando e' stato preso in carico
+
+Il client Carlo e' stato preso in carico dopo 419.128664017 secondi da quando ha fatto richiesta
+
+Il client Carlo e' stato servito dopo 0.994623184204 secondi da quando e' stato preso in carico
+
+Il client Federico e' stato preso in carico dopo 448.154561996 secondi da quando ha fatto richiesta
+
+Il client Filippo e' stato preso in carico dopo 483.189716101 secondi da quando ha fatto richiesta
+
+
+
+ERRORE NELLO STATUS CHECKER!
+
+
+Il client Filippo e' stato servito dopo 10.2007439137 secondi da quando e' stato preso in carico
+
+Il client Tommaso e' stato preso in carico dopo 535.428402901 secondi da quando ha fatto richiesta
+
+Il client Tommaso e' stato servito dopo 18.4950780869 secondi da quando e' stato preso in carico
+
+Il client Francesco e' stato preso in carico dopo 555.927393913 secondi da quando ha fatto richiesta
+
+Il client Francesco e' stato servito dopo 16.006592989 secondi da quando e' stato preso in carico
+
+Il client Tommaso e' stato preso in carico dopo 662.021728992 secondi da quando ha fatto richiesta
+
+Il client Tommaso e' stato servito dopo 14.9973499775 secondi da quando e' stato preso in carico
+
+Il client Bianca e' stato preso in carico dopo 715.044046164 secondi da quando ha fatto richiesta
+
+Il client Bianca e' stato servito dopo 11.0233709812 secondi da quando e' stato preso in carico
+
+Il client Francesco e' stato preso in carico dopo 763.107106924 secondi da quando ha fatto richiesta
+
+Il client Francesco e' stato servito dopo 8.99654102325 secondi da quando e' stato preso in carico
+
+Il client Pietro e' stato preso in carico dopo 720.059617043 secondi da quando ha fatto richiesta
+
+Il client Pietro e' stato servito dopo 10.9967060089 secondi da quando e' stato preso in carico
+
+Il client Filippo e' stato preso in carico dopo 706.033164024 secondi da quando ha fatto richiesta
+
+Il client Filippo e' stato servito dopo 40.4924418926 secondi da quando e' stato preso in carico
+
+Il client Filippo e' stato preso in carico dopo 549.329888105 secondi da quando ha fatto richiesta
+
+Il client Filippo e' stato servito dopo 0.994371891022 secondi da quando e' stato preso in carico
+
+Il client Federico e' stato preso in carico dopo 696.46991992 secondi da quando ha fatto richiesta
+
+Il client Federico e' stato servito dopo 3.99127817154 secondi da quando e' stato preso in carico
+
+Il client Luigi e' stato preso in carico dopo 950.702782869 secondi da quando ha fatto richiesta
+
+Il client Luigi e' stato preso in carico dopo 463.233355045 secondi da quando ha fatto richiesta
+
+
+
+ERRORE NELLO STATUS CHECKER!
+
+
+Il client Luigi e' stato servito dopo 29.9946680069 secondi da quando e' stato preso in carico
+
+Il tempo di inizializzaione e' di 1655548644.48 secondi
+Il corrente e' di 1655549652.78 secondi
+
+Il tempo totale per servire tutti i clients e' stato di 1008.2923131 secondi
+
+Ho servito i clients in quest'ordine:
+Tommaso
+Tommaso
+Filippo
+Federico
+Carlo
+Federico
+Filippo
+Peppe
+Massimo
+Peppe
+Luigi
+Peppe
+Bianca
+Peppe
+Carlo
+Federico
+Filippo
+Tommaso
+Francesco
+Tommaso
+Bianca
+Francesco
+Pietro
+Filippo
+Filippo
+Federico
+Luigi
+Luigi

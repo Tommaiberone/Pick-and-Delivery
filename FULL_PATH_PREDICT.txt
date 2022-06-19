@@ -1,41 +1,39 @@
-Il client Tommaso e' stato preso in carico dopo 4.10079956055e-05 secondi da quando ha fatto richiesta
-
-Il client Tommaso e' stato servito dopo 90.3099799156 secondi da quando e' stato preso in carico
-
-Il client Filippo e' stato preso in carico dopo 50.2672770023 secondi da quando ha fatto richiesta
-
-Il client Filippo e' stato servito dopo 4.99510502815 secondi da quando e' stato preso in carico
-
-Il client Federico e' stato preso in carico dopo 90.2912461758 secondi da quando ha fatto richiesta
-
-Il client Federico e' stato servito dopo 5.99540996552 secondi da quando e' stato preso in carico
-
-Il client Carlo e' stato preso in carico dopo 64.2640080452 secondi da quando ha fatto richiesta
-
-Il client Carlo e' stato servito dopo 6.03576111794 secondi da quando e' stato preso in carico
-
-Il client Filippo e' stato preso in carico dopo 75.3036711216 secondi da quando ha fatto richiesta
-
-Il client Filippo e' stato servito dopo 23.0051159859 secondi da quando e' stato preso in carico
-
-Il client Tommaso e' stato preso in carico dopo 91.3049461842 secondi da quando ha fatto richiesta
-
-Il client Tommaso e' stato servito dopo 50.9889979362 secondi da quando e' stato preso in carico
-
-Il client Luigi e' stato preso in carico dopo 171.318783998 secondi da quando ha fatto richiesta
-
-Il client Luigi e' stato servito dopo 26.5161890984 secondi da quando e' stato preso in carico
-
-Il tempo di inizializzaione e' di 1655475919.8 secondi
-Il corrente e' di 1655476130.22 secondi
-
-Il tempo totale per servire tutti i clients e' stato di 210.420298815 secondi
+Il tempo totale per servire tutti i clients e' stato di 603.851989985 secondi
 
 Ho servito i clients in quest'ordine:
 Tommaso
-Filippo
 Federico
 Carlo
 Filippo
-Tommaso
+Filippo
 Luigi
+Peppe
+Tommaso
+Filippo
+Federico
+Federico
+Bianca
+Francesco
+Tommaso
+Pietro
+Peppe
+Filippo
+Filippo
+Carlo
+Federico
+Tommaso
+Francesco
+Peppe
+Bianca
+Peppe
+Luigi
+Luigi
+Massimo
+
+Il tempo medio in cui sono stati presi in carico i pacchetti dei client dal momento in cui e' stata effettuata la richiesta e' stato di 69.9629549554 secondi
+
+Il tempo massimo che ha aspettato un client prima che fosse preso in carico il suo pacchetto dal momento in cui e' stata effettuata la richiesta e' stato di 379.123857021 secondi
+
+Il tempo medio in cui sono stati portati a destinazione i pacchetti dei client dal momento in cui sono stati presi in carico e' stato di 23.1220654708 secondi
+
+Il tempo massimo impiegagto a portare a destinazione un pacchetto dal momento in cui e' stato preso in carico e' stato di 90.4748318195 secondi

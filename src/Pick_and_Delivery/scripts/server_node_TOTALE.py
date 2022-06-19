@@ -6,6 +6,8 @@ import sys
 import math 
 import socket
 import threading
+
+from numpy import average
 import rospy
 from std_msgs.msg import String
 from tf2_msgs.msg import TFMessage
@@ -22,18 +24,18 @@ MEASURE 			= 	True
 SIZE 				= 	1024
 ARRIVATO_MSG 		= 	"Arrived"
 BLOCCATO_MSG 		= 	"Stuck"
-NUM_CLIENTS 		= 	7
+NUM_CLIENTS 		= 	28
 
 POSIZIONE_MOTHERBASE_X = 0
 POSIZIONE_MOTHERBASE_Y = 0
 
 #Paradigmi
-FIFO 						= 	False		#Implementato
+FIFO 						= 	True		#Implementato
 PRIORITY_QUEUE 				= 	False		#Implementato
 DISTANCE_AND_MAX_TIME 		= 	False		#Implementato
 DISTANCE 					= 	False		#Implementato
 MITT_EQUALS_DEST_CHECK		= 	False		#Implementato
-FULL_PATH_PREDICT			=	True		#Implementato
+FULL_PATH_PREDICT			=	False		#Implementato
 
 #Modificatori dei paradigmi
 ###Per attivarne uno deve essere attivo almeno uno dei paradigmi di sopra
@@ -106,11 +108,17 @@ class robot:
 
 #Inizializzo gli utenti e le relative posizioni
 Utenti =  	{ 	
-				"Tommaso" 	: 	Utente	("Tommaso", 	11.1,	11.4, 	MAX_PRIORITY),
-				"Filippo" 	:	Utente	("Filippo", 	19.8,	13.1, 	HIGH_PRIORITY),
-				"Federico" 	:	Utente	("Federico", 	21.9,	11.4, 	MEDIUM_PRIORITY),
-				"Luigi"		:	Utente	("Luigi", 		37.1,	13.1, 	LOW_PRIORITY),
-				"Carlo"		:	Utente	("Carlo", 		24.1,	13.5, 	NO_PRIORITY)
+				"Tommaso" 		: 	Utente	("Tommaso", 		11.1,	11.4, 	MAX_PRIORITY),
+				"Filippo" 		:	Utente	("Filippo", 		19.8,	13.1, 	HIGH_PRIORITY),
+				"Federico" 		:	Utente	("Federico", 		21.9,	11.4, 	MEDIUM_PRIORITY),
+				"Luigi"			:	Utente	("Luigi", 			37.1,	13.1, 	LOW_PRIORITY),
+				"Carlo"			:	Utente	("Carlo", 			24.1,	13.5, 	NO_PRIORITY),
+				"Francesco"		:	Utente	("Francesco", 		6.0,	17.0, 	HIGH_PRIORITY),
+				"Pietro"		:	Utente	("Pietro", 			8.7,	21.5, 	MEDIUM_PRIORITY),
+				"Peppe"			:	Utente	("Peppe", 			8.4,	25.5, 	LOW_PRIORITY),
+				"Massimo"		:	Utente	("Massimo", 		42.6,	10.8, 	MAX_PRIORITY),
+				"Bianca"		:	Utente	("Bianca", 			5.5,	13.0, 	NO_PRIORITY)
+
 			}	
 
 
@@ -345,9 +353,12 @@ def retrieve_from_list():
 	if DEBUG: print("Rimuovo {} dalla lista dei client in attesa\n".format(nome_richiedente))
 
 	tempo_presa_in_carico = time.time()
+	presa_in_carico_list.append(tempo_presa_in_carico - clientList[daRimuovere][6])
 
-	if MEASURE: print("Il client {} e' stato preso in carico dopo {} secondi da quando ha fatto richiesta\n"
-					.format(nome_richiedente, time.time() - clientList[daRimuovere][6]))
+	if MEASURE and CHATTY: 
+		print("Il client {} e' stato preso in carico dopo {} secondi da quando ha fatto richiesta\n"
+			.format(nome_richiedente, tempo_presa_in_carico - clientList[daRimuovere][6]))
+
 
 	clientList.pop(daRimuovere)
 	orderList.append(nome_richiedente)
@@ -395,9 +406,6 @@ def start_thread():
 			robottino.going_precalc_position = True
 			vai_a()
 
-def go_home(posizione_x, posizione_y):
-	do_nothing()
-
 #Funzione che viene chiamata quando il robottino termina la missione di un client
 def arrivederci():
 
@@ -418,23 +426,46 @@ def arrivederci():
 
 	if CHATTY:
 		print("Portato correttamente il pacco di {} a {}\n".format(robottino.nome_mittente, robottino.nome_destinatario)) 
+
 	if SUPERDEBUG: 
 		print("STATS ROBOTTINO:\ncoming_to_client: {},\ngoing_to_goal: {},\nbusy: {}\n".
 				format(robottino.coming_to_client, robottino.going_to_goal, robottino.busy))
-	if MEASURE: print("Il client {} e' stato servito dopo {} secondi da quando e' stato preso in carico\n".
+
+	if MEASURE and CHATTY: print("Il client {} e' stato servito dopo {} secondi da quando e' stato preso in carico\n".
 				format(robottino.nome_mittente, time.time() - robottino.tempo_presa_in_carico))
+				
+	tempo_serviti_list.append(time.time() - robottino.tempo_presa_in_carico)
 	
 	robottino.supercounter += 1
 
 	if robottino.supercounter == NUM_CLIENTS:
-		if MEASURE: 
+		if MEASURE and CHATTY: 
 			print("Il tempo di inizializzaione e' di {} secondi".format(robottino.tempo_inizializzazione))
 			print("Il corrente e' di {} secondi\n".format(time.time()))
+		
+		if MEASURE:
 			print("Il tempo totale per servire tutti i clients e' stato di {} secondi\n".
 					format(time.time() - robottino.tempo_inizializzazione))
 			print("Ho servito i clients in quest'ordine:")
 			for elem in orderList:
 				print(elem)
+
+			tempo_medio_presa_in_carico = average(presa_in_carico_list)
+			tempo_massimo_presa_in_carico = max(presa_in_carico_list)
+			tempo_medio_servizio = average(tempo_serviti_list)
+			tempo_massimo_servizio = max(tempo_serviti_list)
+
+			print("\nIl tempo medio in cui sono stati presi in carico i pacchetti dei client " +
+				  "dal momento in cui e' stata effettuata la richiesta e' stato di {} secondi".format(tempo_medio_presa_in_carico))
+
+			print("\nIl tempo massimo che ha aspettato un client prima che fosse preso in carico il suo pacchetto " +
+				  "dal momento in cui e' stata effettuata la richiesta e' stato di {} secondi".format(tempo_massimo_presa_in_carico))
+
+			print("\nIl tempo medio in cui sono stati portati a destinazione i pacchetti dei client " +
+				  "dal momento in cui sono stati presi in carico e' stato di {} secondi".format(tempo_medio_servizio))
+
+			print("\nIl tempo massimo impiegagto a portare a destinazione un pacchetto " +
+				  "dal momento in cui e' stato preso in carico e' stato di {} secondi".format(tempo_massimo_servizio))
 
 		sys.stdout.close()
 
@@ -515,10 +546,13 @@ def client_handle_thread():
 	robottino.going_precalc_position = False
 	robottino.coming_to_client = True
 
-	#Ogni thread si iscrive alla topic /Arrived
+	#Verifica che il robottino non stia gia' servendo un client
 	if (robottino.Status_checker != ""):
-		print("\n\nERRORE NELLO STATUS CHECKER!\n\n")
+		robottino.supercounter+=1
+		if DEBUG or CHATTY: print("\n\nERRORE NELLO STATUS CHECKER!\n\n")
+		#Bypassa il problema contando il client come servito 
  
+	#Ogni thread si iscrive alla topic /Arrived
 	robottino.Status_checker = 	rospy.Subscriber("/Arrived", String, status_callback)
 
 	if SUPERDEBUG: print("Il nome del richiedente e': {}".format(robottino.nome_mittente))
@@ -664,8 +698,10 @@ if __name__ == "__main__":
 	#Inizializza la lista
 	clientList = list()
 
-	#Inizializza la lista con l'ordine degli utenti serviti
+	#Inizializza varie liste per la misurazione
 	orderList = list()
+	presa_in_carico_list = list()
+	tempo_serviti_list = list()
 
 	#Rendirizza i print verso un file
 	if DISTANCE:
